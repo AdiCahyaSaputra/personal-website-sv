@@ -14,9 +14,11 @@
     { icon: "/assets/tech-stack/svelte.svg", name: "Svelte" },
     { icon: "/assets/tech-stack/laravel.svg", name: "Laravel" },
     { icon: "/assets/tech-stack/expo.svg", name: "React Native (Expo)" },
+    { icon: "/assets/tech-stack/tanstack.svg", name: "TanStack" },
     { icon: "/assets/tech-stack/python.svg", name: "Python" },
     { icon: "/assets/tech-stack/typescript.svg", name: "TypeScript" },
-    { icon: "/assets/tech-stack/tanstack.svg", name: "TanStack" },
+    { icon: "/assets/tech-stack/go.svg", name: "Golang" },
+    { icon: "/assets/tech-stack/trpc.svg", name: "tRPC" },
     { icon: "/assets/tech-stack/pgsql.svg", name: "PostgreSQL" },
     { icon: "/assets/tech-stack/prisma-orm.svg", name: "Prisma ORM" },
     { icon: "/assets/tech-stack/redis.svg", name: "Redis" },
@@ -34,8 +36,15 @@
   );
 </script>
 
-<section class="bg-black h-screen relative">
-  <Dither colorNum={8} pixelSize={1} enableMouseInteraction={false} />
+<section
+  class="bg-black h-screen relative selection:text-black selection:bg-white"
+>
+  <Dither
+    colorNum={8}
+    pixelSize={4}
+    waveColor={[0.4, 0.4, 0.4]}
+    enableMouseInteraction={false}
+  />
   <TargetCursor hideDefaultCursor />
 
   <div class="relative z-10 h-screen flex flex-col container mx-auto">
@@ -44,14 +53,14 @@
         <ListIcon color="white" size={24} />
       </button>
 
-      <ul class="flex items-center gap-4">
-        <li class="cursor-target p-2">
-          <AtIcon color="white" size={24} />
+      <ul class="flex items-center gap-4 group">
+        <li class="cursor-target p-2 hover:opacity-100 group-hover:opacity-50">
+          <AtIcon size={24} fill="white" weight="fill" />
         </li>
-        <li class="cursor-target p-2">
+        <li class="cursor-target p-2 hover:opacity-100 group-hover:opacity-50">
           <LinkedinLogoIcon size={24} fill="white" weight="fill" />
         </li>
-        <li class="cursor-target p-2">
+        <li class="cursor-target p-2 hover:opacity-100 group-hover:opacity-50">
           <GithubLogoIcon size={24} fill="white" weight="fill" />
         </li>
       </ul>
@@ -72,7 +81,7 @@
 
       <p class="text-white/60">Tech stack/tools I use:</p>
 
-      <div class="flex flex-col divide-y divide-white/10">
+      <div class="flex flex-col divide-y divide-white/10 select-none">
         {#each techStackRows as row}
           <ul class="flex justify-center divide-x divide-white/10">
             {#each row as stack}
