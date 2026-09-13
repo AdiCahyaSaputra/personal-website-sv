@@ -36,9 +36,7 @@
   );
 </script>
 
-<section
-  class="bg-black h-screen relative selection:text-black selection:bg-white"
->
+<section class="bg-black h-screen relative">
   <Dither
     colorNum={8}
     pixelSize={4}
