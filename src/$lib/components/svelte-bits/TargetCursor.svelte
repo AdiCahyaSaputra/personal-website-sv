@@ -3,7 +3,7 @@
 
   type Props = {
     targetSelector?: string;
-    spinDuration?: number;
+
     hideDefaultCursor?: boolean;
     hoverDuration?: number;
     parallaxOn?: boolean;
@@ -11,7 +11,7 @@
 
   let {
     targetSelector = ".cursor-target",
-    spinDuration = 2,
+
     hideDefaultCursor = true,
     hoverDuration = 0.2,
     parallaxOn = true,
@@ -40,11 +40,9 @@
 
     let activeTarget: Element | null = null;
     let currentLeaveHandler: (() => void) | null = null;
-    let resumeTimeout: ReturnType<typeof setTimeout> | null = null;
     let targetCornerPositions: { x: number; y: number }[] | null = null;
     const activeStrength = { current: 0 };
     let tickerFn: (() => void) | null = null;
-    let spinTl: gsap.core.Timeline;
 
     const originalCursor = document.body.style.cursor;
     const cursorHiddenClass = "target-cursor-hidden";
@@ -66,15 +64,7 @@
       y: window.innerHeight / 2,
     });
 
-    const createSpin = () => {
-      spinTl?.kill();
-      spinTl = gsap.timeline({ repeat: -1 }).to(cursor, {
-        rotation: "+=360",
-        duration: spinDuration,
-        ease: "none",
-      });
-    };
-    createSpin();
+    gsap.set(corners, { autoAlpha: 0 });
 
     tickerFn = () => {
       if (!targetCornerPositions || !cursor) return;
@@ -150,15 +140,9 @@
       if (!target || !cursor) return;
       if (activeTarget === target) return;
       if (activeTarget) cleanupTarget(activeTarget);
-      if (resumeTimeout) {
-        clearTimeout(resumeTimeout);
-        resumeTimeout = null;
-      }
       activeTarget = target;
       Array.from(corners).forEach((c) => gsap.killTweensOf(c));
-      gsap.killTweensOf(cursor, "rotation");
-      spinTl?.pause();
-      gsap.set(cursor, { rotation: 0 });
+      gsap.set(corners, { autoAlpha: 1 });
 
       const rect = target.getBoundingClientRect();
       const { borderWidth, cornerSize } = constants;
@@ -208,39 +192,15 @@
           { x: cornerSize * 0.5, y: cornerSize * 0.5 },
           { x: -cornerSize * 1.5, y: cornerSize * 0.5 },
         ];
-        const tl = gsap.timeline();
-        cs.forEach((c, i) => {
-          tl.to(
-            c,
-            {
-              x: positions[i].x,
-              y: positions[i].y,
-              duration: 0.3,
-              ease: "power3.out",
-            },
-            0,
-          );
+        cs.forEach((corner, i) => {
+          gsap.to(corner, {
+            x: positions[i].x,
+            y: positions[i].y,
+            autoAlpha: 0,
+            duration: 0.2,
+            ease: "power3.out",
+          });
         });
-
-        resumeTimeout = setTimeout(() => {
-          if (!activeTarget && cursor && spinTl) {
-            const r = gsap.getProperty(cursor, "rotation") as number;
-            const norm = r % 360;
-            spinTl.kill();
-            spinTl = gsap.timeline({ repeat: -1 }).to(cursor, {
-              rotation: "+=360",
-              duration: spinDuration,
-              ease: "none",
-            });
-            gsap.to(cursor, {
-              rotation: norm + 360,
-              duration: spinDuration * (1 - norm / 360),
-              ease: "none",
-              onComplete: () => spinTl?.restart(),
-            });
-          }
-          resumeTimeout = null;
-        }, 50);
         cleanupTarget(target!);
       };
       currentLeaveHandler = leaveHandler;
@@ -257,7 +217,7 @@
       window.removeEventListener("mousedown", mouseDown);
       window.removeEventListener("mouseup", mouseUp);
       if (activeTarget) cleanupTarget(activeTarget);
-      spinTl?.kill();
+
       document.body.classList.remove(cursorHiddenClass);
       document.body.style.cursor = originalCursor;
     };
@@ -272,7 +232,7 @@
   >
     <div
       bind:this={dot}
-      class="absolute top-1/2 left-1/2 w-1 h-1 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"
+      class="absolute top-1/2 left-1/2 w-2 h-2 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"
       style="will-change:transform;"
     ></div>
     <div

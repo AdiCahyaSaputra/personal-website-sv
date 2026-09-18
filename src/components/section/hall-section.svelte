@@ -66,7 +66,7 @@
       class="flex flex-col items-center justify-center text-white h-full gap-5"
     >
       <h1 class="md:text-8xl text-5xl font-bold font-bebas">
-        Adi Cahya Saputra.
+        Adi Cahya Saputra<span class="text-red-600">.</span>
       </h1>
       <p class="text-center text-lg font-inter font-light text-white/60">
         Pre-AI Programmer with <b>3 years of</b>
