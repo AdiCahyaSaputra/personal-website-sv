@@ -44,12 +44,14 @@
   />
 
   <div class="relative z-10 h-screen flex flex-col container mx-auto">
-    <nav class="py-8 md:px-0 px-8 flex justify-between items-center">
+    <nav
+      class="py-8 md:px-0 px-8 flex justify-between items-center w-full md:w-6xl mx-auto"
+    >
       <button class="cursor-target p-2">
         <ListIcon color="white" size={24} />
       </button>
 
-      <ul class="flex items-center gap-4 group">
+      <ul class="flex items-center md:gap-4 gap-0 group">
         <li class="cursor-target p-2 hover:opacity-100 group-hover:opacity-50">
           <AtIcon size={24} fill="white" weight="fill" />
         </li>
