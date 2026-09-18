@@ -15,6 +15,9 @@
       textClassName="md:text-7xl text-8xl font-bold font-heading text-justify"
       baseRotation={0}
       enableBlur={false}
+      wordAnimationStart="top bottom-=30%"
+      wordAnimationEnd="top 50%"
+      scrub={true}
     />
   </div>
 </section>

@@ -16,6 +16,7 @@
     containerClassName?: string;
     textClassName?: string;
     rotationEnd?: string;
+    wordAnimationStart?: string;
     wordAnimationEnd?: string;
     scrub?: number | boolean;
   };
@@ -30,7 +31,8 @@
     containerClassName = "",
     textClassName = "",
     rotationEnd = "bottom bottom",
-    wordAnimationEnd = "bottom bottom",
+    wordAnimationStart = "top center",
+    wordAnimationEnd = "bottom 20%",
     scrub = 0.8,
   }: Props = $props();
 
@@ -47,6 +49,7 @@
     void baseRotation;
     void blurStrength;
     void rotationEnd;
+    void wordAnimationStart;
     void wordAnimationEnd;
     void scrub;
     void scrollContainer;
@@ -84,7 +87,7 @@
         scrollTrigger: {
           trigger: el,
           scroller,
-          start: "top center",
+          start: wordAnimationStart,
           end: wordAnimationEnd,
           scrub,
         },
@@ -103,7 +106,7 @@
           scrollTrigger: {
             trigger: el,
             scroller,
-            start: "top center",
+            start: wordAnimationStart,
             end: wordAnimationEnd,
             scrub,
           },
