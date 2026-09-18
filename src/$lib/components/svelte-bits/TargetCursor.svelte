@@ -232,7 +232,7 @@
   >
     <div
       bind:this={dot}
-      class="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 border border-black"
+      class="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 border-2 border-gray-400"
       style="will-change:transform;"
     ></div>
     <div
