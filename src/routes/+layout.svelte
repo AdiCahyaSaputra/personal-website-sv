@@ -1,7 +1,16 @@
 <script lang="ts">
   import "./layout.css";
   import favicon from "$lib/assets/favicon.svg";
+  import { onMount } from "svelte";
+  import LocomotiveScroll from "locomotive-scroll";
 
+  onMount(() => {
+    const scroll = new LocomotiveScroll();
+
+    return () => {
+      scroll.destroy();
+    };
+  });
   let { children } = $props();
 </script>
 

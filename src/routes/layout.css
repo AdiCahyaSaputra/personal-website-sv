@@ -2,6 +2,7 @@
 @import "@fontsource-variable/inter";
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "locomotive-scroll/dist/locomotive-scroll.css";
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
@@ -135,6 +136,10 @@
   b {
     font-weight: bold;
   }
+}
+
+.smooth-scroll-root {
+  min-height: 100vh;
 }
 
 .no-scrollbar {

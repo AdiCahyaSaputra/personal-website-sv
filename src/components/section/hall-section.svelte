@@ -1,6 +1,5 @@
 <script lang="ts">
   import Dither from "../../$lib/components/svelte-bits/Dither.svelte";
-  import TargetCursor from "../../$lib/components/svelte-bits/TargetCursor.svelte";
   import ListIcon from "phosphor-svelte/lib/ListIcon";
   import AtIcon from "phosphor-svelte/lib/AtIcon";
   import LinkedinLogoIcon from "phosphor-svelte/lib/LinkedinLogoIcon";
@@ -43,7 +42,6 @@
     waveColor={[0.4, 0.4, 0.4]}
     enableMouseInteraction={false}
   />
-  <TargetCursor hideDefaultCursor />
 
   <div class="relative z-10 h-screen flex flex-col container mx-auto">
     <nav class="py-8 md:px-0 px-8 flex justify-between items-center">

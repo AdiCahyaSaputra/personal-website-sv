@@ -84,7 +84,7 @@
         scrollTrigger: {
           trigger: el,
           scroller,
-          start: "top bottom-=5%",
+          start: "top center",
           end: wordAnimationEnd,
           scrub,
         },
@@ -103,7 +103,7 @@
           scrollTrigger: {
             trigger: el,
             scroller,
-            start: "top bottom-=5%",
+            start: "top center",
             end: wordAnimationEnd,
             scrub,
           },
@@ -130,7 +130,7 @@
 
 <style>
   .scroll-reveal {
-    margin: 20px 0;
+    margin: 0;
   }
 
   .scroll-reveal-text {
