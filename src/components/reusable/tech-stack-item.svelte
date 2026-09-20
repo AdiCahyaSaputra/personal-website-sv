@@ -1,21 +1,15 @@
 <script lang="ts">
-  import { cx } from "class-variance-authority";
+  import type { TechStack } from "@/lib/constants/skill";
 
-  let { icon, name, iconClass = "", wrapperClass = "" } = $props();
+  let { icon, name }: TechStack = $props();
 </script>
 
 <li
-  class={cx(
-    "cursor-target relative grid aspect-square w-[clamp(3rem,8vw,4.25rem)] place-items-center rounded-none max-[30rem]:w-11",
-    wrapperClass,
-  )}
+  class="cursor-target relative grid aspect-square w-[clamp(3rem,8vw,4.25rem)] place-items-center rounded-none max-[30rem]:w-11"
 >
   <span class="group relative grid h-full w-full place-items-center">
     <img
-      class={cx(
-        "size-[clamp(1.5rem,4vw,2rem)] object-contain grayscale group-hover:grayscale-0",
-        iconClass,
-      )}
+      class="size-[clamp(1.5rem,4vw,2rem)] object-contain grayscale group-hover:grayscale-0"
       src={icon}
       alt={name}
     />

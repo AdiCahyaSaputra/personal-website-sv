@@ -1,8 +1,11 @@
 <script lang="ts">
   import ArrowUpRightIcon from "phosphor-svelte/lib/ArrowUpRightIcon";
   import { replaceCursorState } from "@/$lib/shared-state.svelte";
+  import type { Project } from "@/lib/constants/projects";
+  import { cx } from "class-variance-authority";
 
-  const { title, description, relatedPlace, imgUrl } = $props();
+  const { title, description, hashtag, imgUrl, demoUrl, customClass }: Project =
+    $props();
 
   let isHovered = $state(false);
   let isPressed = $state(false);
@@ -14,7 +17,10 @@
 </script>
 
 <div
-  class="flex justify-between items-center gap-8 cursor-none"
+  class={cx(
+    "flex justify-between items-center gap-8 cursor-none rounded-sm overflow-hidden",
+    customClass.background,
+  )}
   role="presentation"
   onpointerenter={(event) => {
     isHovered = true;
@@ -30,28 +36,33 @@
   onpointerup={() => (isPressed = false)}
   onpointercancel={() => (isPressed = false)}
   onpointermove={updateCursorPosition}
+  onclick={() => window.open(demoUrl, "_blank")}
 >
-  <div class="text-white w-1/2 flex flex-col gap-2 items-start">
+  <div
+    class={cx("w-1/2 flex flex-col gap-8 items-start p-8", customClass.title)}
+  >
     <div>
       <h2 class="text-6xl font-heading">{title}</h2>
-      <p class="text-white/60 text-lg max-w-2/3">{description}</p>
+      <p class={cx("text-lg max-w-2/3 line-clamp-3", customClass.description)}>
+        {description}
+      </p>
     </div>
-    <div class="flex items-end gap-2">
-      <div class="size-4 relative">
-        <div
-          class="absolute border-l border-b border-white/60 w-4 h-2 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
-        ></div>
-      </div>
-      <p class="text-sm leading-3">developed when i'm at {relatedPlace}</p>
+    <div class="flex items-center gap-2">
+      {#each hashtag as tag}
+        <p class="text-xs"><span class="font-bold">#</span>{tag}</p>
+      {/each}
     </div>
   </div>
-  <div class="aspect-video w-1/2">
+  <div class="aspect-video w-1/2 overflow-hidden">
     <img src={imgUrl} alt={title} />
   </div>
 </div>
 
 <div
-  class="pointer-events-none fixed z-50 -translate-x-1/2 -translate-y-1/2 border border-black rounded-full bg-white p-8 transition-[opacity,transform] duration-200 ease-out"
+  class={cx(
+    "pointer-events-none fixed z-50 -translate-x-1/2 -translate-y-1/2 rounded-full p-4 transition-[opacity,transform] duration-200 ease-out",
+    customClass.cursorBackground,
+  )}
   class:opacity-0={!isHovered}
   class:scale-0={!isHovered}
   class:scale-75={isHovered && isPressed}
@@ -59,5 +70,9 @@
   style:top={`${cursorPosition.y}px`}
   aria-hidden="true"
 >
-  <ArrowUpRightIcon weight="fill" size={32} fill="black" />
+  <ArrowUpRightIcon
+    weight="regular"
+    size={24}
+    fill={customClass.cursorForeground}
+  />
 </div>
