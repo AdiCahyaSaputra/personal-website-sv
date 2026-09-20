@@ -5,6 +5,7 @@
   import LinkedinLogoIcon from "phosphor-svelte/lib/LinkedinLogoIcon";
   import GithubLogoIcon from "phosphor-svelte/lib/GithubLogoIcon";
   import TechStackItem from "../reusable/tech-stack-item.svelte";
+  import { cx } from "class-variance-authority";
 
   const techStacks = [
     { icon: "/assets/tech-stack/django.svg", name: "Django" },
@@ -45,7 +46,7 @@
 
   <div class="relative z-10 h-screen flex flex-col container mx-auto">
     <nav
-      class="py-8 md:px-0 px-8 flex justify-between items-center w-full md:w-6xl mx-auto"
+      class="py-8 md:px-0 px-8 flex justify-between items-center w-full mx-auto"
     >
       <button class="cursor-target p-2">
         <ListIcon color="white" size={24} />
@@ -79,9 +80,15 @@
 
       <p class="text-white/60">Tech stack/tools I use:</p>
 
-      <div class="flex flex-col divide-y divide-white/10 select-none">
-        {#each techStackRows as row}
-          <ul class="flex justify-center divide-x divide-white/10">
+      <div class="flex flex-col divide-y divide-white/30 select-none">
+        {#each techStackRows as row, index}
+          <ul
+            class={cx(
+              "flex justify-center divide-x divide-white/30",
+              index === techStackRows.length - 1 &&
+                "border-x border-white/30 w-max mx-auto",
+            )}
+          >
             {#each row as stack}
               <TechStackItem icon={stack.icon} name={stack.name} />
             {/each}

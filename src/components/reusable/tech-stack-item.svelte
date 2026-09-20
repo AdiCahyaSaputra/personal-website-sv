@@ -1,13 +1,21 @@
 <script lang="ts">
-  let { icon, name }: { icon: string; name: string } = $props();
+  import { cx } from "class-variance-authority";
+
+  let { icon, name, iconClass = "", wrapperClass = "" } = $props();
 </script>
 
 <li
-  class="cursor-target relative grid aspect-square w-[clamp(3rem,8vw,4.25rem)] place-items-center rounded-none max-[30rem]:w-11"
+  class={cx(
+    "cursor-target relative grid aspect-square w-[clamp(3rem,8vw,4.25rem)] place-items-center rounded-none max-[30rem]:w-11",
+    wrapperClass,
+  )}
 >
   <span class="group relative grid h-full w-full place-items-center">
     <img
-      class="h-[clamp(1.5rem,4vw,2rem)] w-[clamp(1.5rem,4vw,2rem)] object-contain grayscale group-hover:grayscale-0"
+      class={cx(
+        "size-[clamp(1.5rem,4vw,2rem)] object-contain grayscale group-hover:grayscale-0",
+        iconClass,
+      )}
       src={icon}
       alt={name}
     />

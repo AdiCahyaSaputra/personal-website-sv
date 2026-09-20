@@ -1,5 +1,7 @@
 <script lang="ts">
+  import { cx } from "class-variance-authority";
   import { gsap } from "gsap";
+  import { replaceCursorState } from "../../shared-state.svelte";
 
   type Props = {
     targetSelector?: string;
@@ -227,12 +229,15 @@
 {#if !isMobile}
   <div
     bind:this={cursor}
-    class="fixed top-0 left-0 w-0 h-0 pointer-events-none z-[9999]"
+    class={cx(
+      "fixed top-0 left-0 w-0 h-0 pointer-events-none z-[9999]",
+      replaceCursorState.value ? "opacity-0" : "opacity-100",
+    )}
     style="will-change:transform;"
   >
     <div
       bind:this={dot}
-      class="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 border-2 border-gray-400"
+      class="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 border-2 border-black"
       style="will-change:transform;"
     ></div>
     <div
