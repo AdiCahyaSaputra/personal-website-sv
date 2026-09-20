@@ -4,6 +4,7 @@
 @import "tw-animate-css";
 @import "locomotive-scroll/dist/locomotive-scroll.css";
 @import "shadcn/tailwind.css";
+@import "../components/css/liquid-glass.css";
 
 @custom-variant dark (&:is(.dark *));
 

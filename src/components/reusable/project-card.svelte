@@ -14,11 +14,21 @@
   function updateCursorPosition(event: PointerEvent) {
     cursorPosition = { x: event.clientX, y: event.clientY };
   }
+
+  function portalToBody(node: HTMLElement) {
+    document.body.append(node);
+
+    return {
+      destroy() {
+        node.remove();
+      },
+    };
+  }
 </script>
 
 <div
   class={cx(
-    "flex justify-between items-center gap-8 cursor-none rounded-sm overflow-hidden",
+    "flex flex-col-reverse md:flex-row md:justify-between md:items-center md:gap-8 gap-0 cursor-none overflow-hidden",
     customClass.background,
   )}
   role="presentation"
@@ -39,11 +49,16 @@
   onclick={() => window.open(demoUrl, "_blank")}
 >
   <div
-    class={cx("w-1/2 flex flex-col gap-8 items-start p-8", customClass.title)}
+    class={cx(
+      "w-full md:w-1/2 flex flex-col gap-8 items-start md:p-8 p-4",
+      customClass.title,
+    )}
   >
     <div>
-      <h2 class="text-6xl font-heading">{title}</h2>
-      <p class={cx("text-lg max-w-2/3 line-clamp-3", customClass.description)}>
+      <h2 class="text-4xl md:text-6xl font-heading">{title}</h2>
+      <p
+        class={cx("text-lg md:max-w-2/3 line-clamp-3", customClass.description)}
+      >
         {description}
       </p>
     </div>
@@ -53,14 +68,15 @@
       {/each}
     </div>
   </div>
-  <div class="aspect-video w-1/2 overflow-hidden">
+  <div class="md:aspect-video w-full md:w-1/2 overflow-hidden">
     <img src={imgUrl} alt={title} />
   </div>
 </div>
 
 <div
+  use:portalToBody
   class={cx(
-    "pointer-events-none fixed z-50 -translate-x-1/2 -translate-y-1/2 rounded-full p-4 transition-[opacity,transform] duration-200 ease-out",
+    "pointer-events-none fixed z-50 -translate-x-1/2 -translate-y-1/2 rounded-full p-4 transition-[opacity,transform] duration-200 ease-out backdrop-blur-md",
     customClass.cursorBackground,
   )}
   class:opacity-0={!isHovered}

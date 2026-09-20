@@ -3,6 +3,7 @@
   import ProfileSection from "@/components/section/profile-section.svelte";
   import TargetCursor from "@/$lib/components/svelte-bits/TargetCursor.svelte";
   import ProjectSection from "@/components/section/project-section.svelte";
+  import ExperienceSection from "@/components/section/experience-section.svelte";
 </script>
 
 <main
@@ -14,4 +15,5 @@
   <HallSection />
   <ProfileSection />
   <ProjectSection />
+  <ExperienceSection />
 </main>

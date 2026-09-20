@@ -12,7 +12,7 @@
       text="I live in Jakarta, Indonesia. Graduated from vocational high school in
       2023 majoring in Software Engineering. Since then, I&apos;ve been learning
       by building and working with teams to solve practical business problems."
-      textClassName="md:text-7xl text-8xl font-bold font-heading text-center"
+      textClassName="md:text-7xl text-8xl font-bold font-heading md:text-center text-justify"
       baseRotation={0}
       enableBlur={false}
       wordAnimationStart="top bottom-=20%"
