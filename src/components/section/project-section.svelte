@@ -4,6 +4,7 @@
   import { onMount } from "svelte";
   import { gsap } from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { cn } from "cn";
 
   gsap.registerPlugin(ScrollTrigger);
 
@@ -28,12 +29,12 @@
             if (!(card instanceof HTMLElement)) return;
 
             gsap.to(card, {
-              scale: isLastCard ? 1 : 0.98 + index * 0.01,
+              // scale: isLastCard ? 1 : 0.98 + index * 0.01,
               transformOrigin: "top center",
               ease: "none",
               scrollTrigger: {
                 trigger: wrapper,
-                start: "top bottom-=87%",
+                start: "top top",
                 endTrigger: cardsElement,
                 end: "bottom center",
                 scrub: true,
@@ -53,13 +54,10 @@
   });
 </script>
 
-<section
-  bind:this={sectionElement}
-  class="min-h-screen bg-black px-8 md:px-0 py-8"
->
-  <div class="container mx-auto space-y-4 relative">
+<section bind:this={sectionElement} class="min-h-screen bg-black py-8">
+  <div class="space-y-4 relative">
     <div
-      class="flex flex-col md:flex-row md:justify-between md:items-center rounded-sm w-full sticky top-10"
+      class="container mx-auto px-8 md:px-0 flex flex-col md:flex-row md:justify-between md:items-center rounded-sm w-full"
     >
       <div class="flex items-center">
         <h1 class="text-white md:text-4xl text-2xl">
@@ -76,10 +74,13 @@
 
     <div
       bind:this={cardsElement}
-      class="flex flex-col gap-4 bg-black md:bg-transparent relative md:static z-10"
+      class="flex flex-col bg-black md:bg-transparent relative md:static z-10"
     >
-      {#each PROJECTS as project (project.title)}
-        <div data-project-card class="w-full perspective-normal">
+      {#each PROJECTS as project, index}
+        <div
+          data-project-card
+          class={cn("w-full perspective-normal", index > 0 && "md:-mt-16")}
+        >
           <ProjectCard
             title={project.title}
             description={project.description}

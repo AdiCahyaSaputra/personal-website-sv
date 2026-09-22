@@ -27,11 +27,10 @@
 </script>
 
 <div
-  class={cx(
-    "flex flex-col-reverse md:flex-row md:justify-between md:items-center md:gap-8 gap-0 cursor-none overflow-hidden",
-    customClass.background,
-  )}
+  class={cx("cursor-none overflow-hidden", customClass.background)}
   role="presentation"
+  data-scroll
+  data-scroll-speed="0.08"
   onpointerenter={(event) => {
     isHovered = true;
     replaceCursorState.value = true;
@@ -49,27 +48,34 @@
   onclick={() => window.open(demoUrl, "_blank")}
 >
   <div
-    class={cx(
-      "w-full md:w-1/2 flex flex-col gap-8 items-start md:p-8 p-4",
-      customClass.title,
-    )}
+    class="container mx-auto flex flex-col-reverse md:flex-row md:justify-between md:items-center md:gap-8 gap-0 h-full"
   >
-    <div>
-      <h2 class="text-4xl md:text-6xl font-heading">{title}</h2>
-      <p
-        class={cx("text-lg md:max-w-2/3 line-clamp-3", customClass.description)}
-      >
-        {description}
-      </p>
+    <div
+      class={cx(
+        "w-full md:w-1/2 flex flex-col gap-8 items-start p-8",
+        customClass.title,
+      )}
+    >
+      <div>
+        <h2 class="text-4xl md:text-6xl font-heading">{title}</h2>
+        <p
+          class={cx(
+            "text-lg md:max-w-2/3 line-clamp-3",
+            customClass.description,
+          )}
+        >
+          {description}
+        </p>
+      </div>
+      <div class="flex items-center gap-2">
+        {#each hashtag as tag}
+          <p class="text-xs"><span class="font-bold">#</span>{tag}</p>
+        {/each}
+      </div>
     </div>
-    <div class="flex items-center gap-2">
-      {#each hashtag as tag}
-        <p class="text-xs"><span class="font-bold">#</span>{tag}</p>
-      {/each}
+    <div class="md:aspect-video w-full md:w-1/2 overflow-hidden md:p-8">
+      <img src={imgUrl} alt={title} class="md:rounded-sm" />
     </div>
-  </div>
-  <div class="md:aspect-video w-full md:w-1/2 overflow-hidden">
-    <img src={imgUrl} alt={title} />
   </div>
 </div>
 
