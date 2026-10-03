@@ -33,10 +33,10 @@
       .timeline()
       .fromTo(
         dialog.querySelectorAll("[data-menu-line]"),
-        { y: (index) => index === 0 ? -3.5 : 3.5, rotation: 0 },
+        { y: (index) => (index === 0 ? -3.5 : 3.5), rotation: 0 },
         {
           y: 0,
-          rotation: (index) => index === 0 ? 45 : -45,
+          rotation: (index) => (index === 0 ? 45 : -45),
           duration: reducedMotion ? 0 : 0.35,
           ease: "power3.inOut",
         },
@@ -90,18 +90,27 @@
       finish();
       return;
     }
-    timeline = gsap.timeline({ onComplete: finish })
-      .to(dialog.querySelectorAll("[data-menu-line]"), {
-        y: (index) => index === 0 ? -3.5 : 3.5,
-        rotation: 0,
-        duration: 0.25,
-        ease: "power3.inOut",
-      }, 0)
-      .to(dialog, {
-        clipPath: "inset(0 0 100% 0)",
-        duration: 0.35,
-        ease: "power3.inOut",
-      }, 0);
+    timeline = gsap
+      .timeline({ onComplete: finish })
+      .to(
+        dialog.querySelectorAll("[data-menu-line]"),
+        {
+          y: (index) => (index === 0 ? -3.5 : 3.5),
+          rotation: 0,
+          duration: 0.25,
+          ease: "power3.inOut",
+        },
+        0,
+      )
+      .to(
+        dialog,
+        {
+          clipPath: "inset(0 0 100% 0)",
+          duration: 0.35,
+          ease: "power3.inOut",
+        },
+        0,
+      );
   }
 
   function navigate(event: MouseEvent, destination: string) {
@@ -204,8 +213,7 @@
       <button
         class="flex min-h-11 items-center [justify-content:end] gap-4.5 py-3 pr-0 pl-4 text-[12px] hover:text-white/40"
         onclick={() => closeMenu()}
-        aria-label="Close menu"
-        >{@render menuIcon()}</button
+        aria-label="Close menu">{@render menuIcon()}</button
       >
     </div>
     <div

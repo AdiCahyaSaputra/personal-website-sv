@@ -23,4 +23,12 @@ export const PROJECTS: Project[] = [
     imgUrl: "/assets/project/yufo.webp",
     demoUrl: "https://yufotrade.com",
   },
+  {
+    title: "forumgw",
+    description:
+      "A community forum for open and anonymous discussions, built with a type-safe web stack.",
+    hashtag: ["personal", "fullstack", "web"],
+    imgUrl: "/assets/project/forumgw.webp",
+    demoUrl: "https://forumgw.vercel.app",
+  },
 ];

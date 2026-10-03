@@ -5,7 +5,7 @@
 
 <section
   id="about"
-  class="shell flex min-h-[min(900px,100svh)] flex-col justify-center pt-[150px] pb-16 mobile:min-h-auto mobile:pt-32 mobile:pb-12"
+  class="shell flex min-h-dvh flex-col justify-center pt-37.5 pb-16 mobile:min-h-auto mobile:pt-32 mobile:pb-12"
   aria-labelledby="name"
   tabindex="-1"
 >
@@ -17,7 +17,8 @@
       ><span data-name-line>Adi Cahya</span></span
     >
     <span class="block overflow-hidden pt-[0.06em] [&>span]:inline-block"
-      ><span data-name-line>Saputra<span class="text-red-600">.</span></span></span
+      ><span data-name-line>Saputra<span class="text-red-600">.</span></span
+      ></span
     >
   </h1>
   <div
