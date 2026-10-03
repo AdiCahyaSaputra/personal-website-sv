@@ -76,10 +76,6 @@ a {
   @apply max-w-[340px] text-[14px] leading-[1.8] text-muted;
 }
 
-@utility text-link {
-  @apply inline-flex min-h-11 items-center gap-6 border-b border-b-[#737373] text-[13px] transition-[color,border-color] duration-200 ease-[ease] hover:border-b-white/40 hover:text-white/40;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     @apply scroll-auto;

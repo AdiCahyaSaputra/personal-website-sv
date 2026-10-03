@@ -9,7 +9,7 @@
   aria-labelledby="contact-heading"
   tabindex="-1"
 >
-  <div data-reveal>
+  <div>
     <h2
       id="contact-heading"
       class="mt-8 font-heading text-[clamp(6rem,16vw,15rem)] leading-none tracking-[-0.025em]"

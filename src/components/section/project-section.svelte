@@ -9,7 +9,7 @@
   aria-labelledby="projects-heading"
   tabindex="-1"
 >
-  <div class="section-intro" data-reveal>
+  <div class="section-intro" data-section-intro>
     <h2 id="projects-heading" class="section-heading">
       Selected work<span class="text-red-600">.</span>
     </h2>

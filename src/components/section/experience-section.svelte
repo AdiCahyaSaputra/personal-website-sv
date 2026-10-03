@@ -13,11 +13,11 @@
 
 <section
   id="experience"
-  class="section shell"
+  class="section shell lg:grid lg:grid-cols-[0.85fr_1.5fr] lg:items-start lg:gap-16"
   aria-labelledby="experience-heading"
   tabindex="-1"
 >
-  <div class="section-intro" data-reveal>
+  <div class="section-intro lg:mb-0 lg:flex-col lg:items-start lg:gap-6" data-experience-intro>
     <h2 id="experience-heading" class="section-heading">
       Experience<span class="text-red-600">.</span>
     </h2>
@@ -29,7 +29,7 @@
     {#each experience as role (`${role.at}-${role.experience}`)}
       <li
         class="grid grid-cols-[1fr_3fr_1fr] items-baseline gap-6 border-t border-t-line py-7.5 mobile:grid-cols-[44px_1fr] mobile:gap-x-5 mobile:gap-y-2.5 mobile:py-6"
-        data-reveal
+        data-experience-row
       >
         <span
           class={cn(
