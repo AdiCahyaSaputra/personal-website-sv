@@ -170,7 +170,7 @@
   <div class="shell flex h-23 items-center justify-between mobile:h-19">
     <a
       class="block size-11"
-      href="#about"
+      href="#hall"
       aria-label="Adi Cahya Saputra, back to top"
     >
       <MinecraftHead />
@@ -204,7 +204,7 @@
     <div class="flex h-23 shrink-0 items-center justify-between mobile:h-19">
       <a
         class="block size-11"
-        href="#about"
+        href="#hall"
         onclick={(event) => navigate(event, "#about")}
         aria-label="Adi Cahya Saputra, back to top"
       >

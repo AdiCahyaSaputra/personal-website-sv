@@ -1,10 +1,12 @@
 <script lang="ts">
   import DownloadSimpleIcon from "phosphor-svelte/lib/DownloadSimpleIcon";
   import FillLink from "../reusable/fill-link.svelte";
+
+  let totalExperience = new Date().getFullYear() - 2023;
 </script>
 
 <section
-  id="about"
+  id="hall"
   class="shell flex min-h-dvh flex-col justify-center pt-37.5 pb-16 mobile:min-h-auto mobile:pt-32 mobile:pb-12"
   aria-labelledby="name"
   tabindex="-1"
@@ -25,11 +27,11 @@
     class="mt-12 flex mobile:mt-8 mobile:grid-cols-[1fr] mobile:gap-9 w-full"
     data-hero-details
   >
-    <div class="max-w-[420px] mobile:row-start-1">
-      <p class="text-[15px] leading-[1.8] text-muted mobile:text-[14px]">
+    <div class="max-w-105 mobile:row-start-1">
+      <p class="text-base leading-[1.8] text-muted mobile:text-sm">
         Pre-AI Programmer. I build full stack web <br
           class="mobile:hidden"
-        />and mobile apps for at least 3 years.
+        />and mobile apps for the past {totalExperience} years.
       </p>
 
       <FillLink
