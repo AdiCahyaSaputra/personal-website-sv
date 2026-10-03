@@ -32,6 +32,17 @@
     timeline = gsap
       .timeline()
       .fromTo(
+        dialog.querySelectorAll("[data-menu-line]"),
+        { y: (index) => index === 0 ? -3.5 : 3.5, rotation: 0 },
+        {
+          y: 0,
+          rotation: (index) => index === 0 ? 45 : -45,
+          duration: reducedMotion ? 0 : 0.35,
+          ease: "power3.inOut",
+        },
+        0,
+      )
+      .fromTo(
         dialog,
         { clipPath: "inset(0 0 100% 0)" },
         {
@@ -39,6 +50,7 @@
           duration: reducedMotion ? 0 : 0.55,
           ease: "power3.inOut",
         },
+        0,
       )
       .fromTo(
         dialog.querySelectorAll(".menu-link"),
@@ -78,11 +90,18 @@
       finish();
       return;
     }
-    timeline = gsap.timeline({ onComplete: finish }).to(dialog, {
-      clipPath: "inset(0 0 100% 0)",
-      duration: 0.35,
-      ease: "power3.inOut",
-    });
+    timeline = gsap.timeline({ onComplete: finish })
+      .to(dialog.querySelectorAll("[data-menu-line]"), {
+        y: (index) => index === 0 ? -3.5 : 3.5,
+        rotation: 0,
+        duration: 0.25,
+        ease: "power3.inOut",
+      }, 0)
+      .to(dialog, {
+        clipPath: "inset(0 0 100% 0)",
+        duration: 0.35,
+        ease: "power3.inOut",
+      }, 0);
   }
 
   function navigate(event: MouseEvent, destination: string) {
@@ -123,6 +142,21 @@
   }
 </script>
 
+{#snippet menuIcon()}
+  <span class="relative block size-6" aria-hidden="true">
+    <span
+      class="absolute top-1/2 left-0 -mt-[0.5px] h-px w-6 origin-center bg-current"
+      style="transform: translateY(-3.5px)"
+      data-menu-line
+    ></span>
+    <span
+      class="absolute top-1/2 left-0 -mt-[0.5px] h-px w-6 origin-center bg-current"
+      style="transform: translateY(3.5px)"
+      data-menu-line
+    ></span>
+  </span>
+{/snippet}
+
 <header class="fixed inset-x-0 top-0 z-30 bg-[#101010]/30 backdrop-blur-md">
   <div class="shell flex h-23 items-center justify-between mobile:h-19">
     <a
@@ -140,13 +174,7 @@
       aria-expanded={menuOpen}
       aria-controls="site-menu"
     >
-      <span
-        class="flex w-6 flex-col gap-1.5 [&>span]:h-px [&>span]:w-6 [&>span]:bg-current"
-        aria-hidden="true"
-      >
-        <span></span>
-        <span></span>
-      </span>
+      {@render menuIcon()}
     </button>
   </div>
 </header>
@@ -177,10 +205,7 @@
         class="flex min-h-11 items-center [justify-content:end] gap-4.5 py-3 pr-0 pl-4 text-[12px] hover:text-white/40"
         onclick={() => closeMenu()}
         aria-label="Close menu"
-        ><span
-          class="w-6 text-[32px] leading-5 font-extralight"
-          aria-hidden="true">×</span
-        ></button
+        >{@render menuIcon()}</button
       >
     </div>
     <div
