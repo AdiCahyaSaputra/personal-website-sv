@@ -1,23 +1,13 @@
-<script lang="ts">
-  import ScrollReveal from "@/$lib/components/svelte-bits/ScrollReveal.svelte";
-</script>
-
-<section class="h-[60vh] bg-black md:px-0 px-8 py-24">
-  <div
-    class="container mx-auto h-max text-white md:max-w-6xl"
-    data-scroll
-    data-scroll-speed="0.08"
+<section
+  class="shell py-14 mobile:grid-cols-[1fr] mobile:gap-5 mobile:py-10"
+  aria-label="About me"
+  data-reveal
+>
+  <p
+    class="max-w-[800px] text-[clamp(18px,2.2vw,28px)] leading-[1.6] tracking-[-0.025em]"
   >
-    <ScrollReveal
-      text="I live in Jakarta, Indonesia. Graduated from vocational high school in
-      2023 majoring in Software Engineering. Since then, I&apos;ve been learning
-      by building and working with teams to solve practical business problems."
-      textClassName="md:text-7xl text-8xl font-bold font-heading md:text-center text-justify"
-      baseRotation={0}
-      enableBlur={false}
-      wordAnimationStart="top bottom-=20%"
-      wordAnimationEnd="top 50%"
-      scrub={true}
-    />
-  </div>
+    I’m a developer based in Jakarta. Since graduating in software engineering
+    in 2023, I’ve been learning by building, working with teams, and solving
+    practical business problems.
+  </p>
 </section>

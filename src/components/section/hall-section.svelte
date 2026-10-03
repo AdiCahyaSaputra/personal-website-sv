@@ -1,85 +1,43 @@
 <script lang="ts">
-  import Dither from "../../$lib/components/svelte-bits/Dither.svelte";
-  import ListIcon from "phosphor-svelte/lib/ListIcon";
-  import AtIcon from "phosphor-svelte/lib/AtIcon";
-  import LinkedinLogoIcon from "phosphor-svelte/lib/LinkedinLogoIcon";
-  import GithubLogoIcon from "phosphor-svelte/lib/GithubLogoIcon";
-  import TechStackItem from "../reusable/tech-stack-item.svelte";
-  import { cx } from "class-variance-authority";
-  import { TECH_STACKS } from "../../lib/constants/skill";
-
-  let maxItemPerRow = $state(6);
-  let techStackRows = $derived(
-    Array.from(
-      { length: Math.ceil(TECH_STACKS.length / maxItemPerRow) },
-      (_, index) =>
-        TECH_STACKS.slice(
-          index * maxItemPerRow,
-          index * maxItemPerRow + maxItemPerRow,
-        ),
-    ),
-  );
+  import ArrowDownIcon from "phosphor-svelte/lib/ArrowDownIcon";
+  import DownloadSimpleIcon from "phosphor-svelte/lib/DownloadSimpleIcon";
 </script>
 
-<section class="bg-black h-screen relative">
-  <Dither
-    colorNum={8}
-    pixelSize={4}
-    waveColor={[0.4, 0.4, 0.4]}
-    enableMouseInteraction={false}
-  />
-
-  <div class="relative z-10 h-screen flex flex-col container mx-auto">
-    <nav
-      class="py-8 md:px-0 px-8 flex justify-between items-center w-full mx-auto"
+<section
+  id="about"
+  class="shell flex min-h-[min(900px,100svh)] flex-col justify-center pt-[150px] pb-16 mobile:min-h-auto mobile:pt-32 mobile:pb-12"
+  aria-labelledby="name"
+  tabindex="-1"
+>
+  <h1
+    id="name"
+    class="font-heading text-[clamp(6rem,15.8vw,14rem)] leading-[0.84] font-normal tracking-[-0.025em] min-[1500px]:text-[15rem] mobile:text-[clamp(5.8rem,21vw,10rem)]"
+  >
+    <span class="block overflow-hidden pt-[0.06em] [&>span]:inline-block"
+      ><span data-intro>Adi Cahya</span></span
     >
-      <button class="cursor-target p-2">
-        <ListIcon color="white" size={24} />
-      </button>
-
-      <ul class="flex items-center md:gap-4 gap-0 group">
-        <li class="cursor-target p-2 hover:opacity-100 group-hover:opacity-50">
-          <AtIcon size={24} fill="white" weight="fill" />
-        </li>
-        <li class="cursor-target p-2 hover:opacity-100 group-hover:opacity-50">
-          <LinkedinLogoIcon size={24} fill="white" weight="fill" />
-        </li>
-        <li class="cursor-target p-2 hover:opacity-100 group-hover:opacity-50">
-          <GithubLogoIcon size={24} fill="white" weight="fill" />
-        </li>
-      </ul>
-    </nav>
-
-    <div
-      class="flex flex-col items-center justify-center text-white h-full gap-5"
+    <span class="block overflow-hidden pt-[0.06em] [&>span]:inline-block"
+      ><span data-intro>Saputra<span class="text-red-600">.</span></span></span
     >
-      <h1 class="md:text-8xl text-5xl font-bold font-bebas">
-        Adi Cahya Saputra<span class="text-red-600">.</span>
-      </h1>
-      <p class="text-center text-lg font-inter font-light text-white/60">
-        Pre-AI Programmer with <b>3 years of</b>
-        <br />
-        hands-on experience in developing <br />
-        <b>full stack web and mobile apps.</b>
+  </h1>
+  <div
+    class="mt-12 flex mobile:mt-8 mobile:grid-cols-[1fr] mobile:gap-9 w-full"
+    data-intro
+  >
+    <div class="max-w-[420px] mobile:row-start-1">
+      <p class="text-[15px] leading-[1.8] text-muted mobile:text-[14px]">
+        Pre-AI Programmer. I build full stack web <br
+          class="mobile:hidden"
+        />and mobile apps for at least 3 years.
       </p>
 
-      <p class="text-white/60">Tech stack/tools I use:</p>
-
-      <div class="flex flex-col divide-y divide-white/30 select-none">
-        {#each techStackRows as row, index}
-          <ul
-            class={cx(
-              "flex justify-center divide-x divide-white/30",
-              index === techStackRows.length - 1 &&
-                "border-x border-white/30 w-max mx-auto",
-            )}
-          >
-            {#each row as stack}
-              <TechStackItem icon={stack.icon} name={stack.name} />
-            {/each}
-          </ul>
-        {/each}
-      </div>
+      <a
+        class="text-link mt-5"
+        href="/assets/doc/resume-adi-cahya-saputra.pdf"
+        download="Adi-Cahya-Saputra-CV.pdf"
+      >
+        Download My CV <DownloadSimpleIcon size={17} />
+      </a>
     </div>
   </div>
 </section>
