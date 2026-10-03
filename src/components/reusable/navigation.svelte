@@ -1,7 +1,8 @@
 <script lang="ts">
   import { gsap } from "gsap";
   import ArrowUpRightIcon from "phosphor-svelte/lib/ArrowUpRightIcon";
-  import ContactLinks from "./reusable/contact-links.svelte";
+  import ContactLinks from "./contact-links.svelte";
+  import MinecraftHead from "./minecraft-head.svelte";
 
   const links = [
     { href: "#about", label: "About" },
@@ -123,14 +124,16 @@
 </script>
 
 <header class="fixed inset-x-0 top-0 z-30 bg-[#101010]/30 backdrop-blur-md">
-  <div class="shell flex h-[92px] items-center justify-between mobile:h-[76px]">
+  <div class="shell flex h-23 items-center justify-between mobile:h-19">
     <a
-      class="text-[27px] font-bold tracking-[-0.08em]"
+      class="block size-11"
       href="#about"
-      aria-label="Adics, back to top">YooY<span class="text-red-600">.</span></a
+      aria-label="Adi Cahya Saputra, back to top"
     >
+      <MinecraftHead />
+    </a>
     <button
-      class="flex min-h-11 items-center [justify-content:end] gap-[18px] py-3 pr-0 pl-4 text-[12px] hover:text-white/40"
+      class="flex min-h-11 items-center [justify-content:end] gap-4.5 py-3 pr-0 pl-4 text-[12px] hover:text-white/40"
       onclick={openMenu}
       aria-label="Open menu"
       aria-haspopup="dialog"
@@ -161,19 +164,19 @@
   onclose={restoreScroll}
 >
   <div class="shell flex min-h-full flex-col">
-    <div
-      class="flex h-[92px] shrink-0 items-center justify-between mobile:h-[76px]"
-    >
+    <div class="flex h-23 shrink-0 items-center justify-between mobile:h-19">
       <a
-        class="text-[27px] font-bold tracking-[-0.08em]"
+        class="block size-11"
         href="#about"
         onclick={(event) => navigate(event, "#about")}
-        aria-label="Adics, back to top"
-        >YooY<span class="text-red-600">.</span></a
+        aria-label="Adi Cahya Saputra, back to top"
       >
+        <MinecraftHead />
+      </a>
       <button
-        class="flex min-h-11 items-center [justify-content:end] gap-[18px] py-3 pr-0 pl-4 text-[12px] hover:text-white/40"
+        class="flex min-h-11 items-center [justify-content:end] gap-4.5 py-3 pr-0 pl-4 text-[12px] hover:text-white/40"
         onclick={() => closeMenu()}
+        aria-label="Close menu"
         ><span
           class="w-6 text-[32px] leading-5 font-extralight"
           aria-hidden="true">×</span
