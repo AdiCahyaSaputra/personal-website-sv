@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { gsap } from "gsap";
   import ArrowUpRightIcon from "phosphor-svelte/lib/ArrowUpRightIcon";
   import ContactLinks from "./contact-links.svelte";
@@ -14,9 +15,20 @@
 
   let dialog: HTMLDialogElement;
   let menuOpen = $state(false);
+  let activeHash = $state("");
   let timeline: gsap.core.Timeline | undefined;
   let previousOverflow = "";
   let closing = false;
+
+  onMount(() => {
+    const updateActiveHash = () => {
+      activeHash = window.location.hash;
+    };
+
+    updateActiveHash();
+    window.addEventListener("hashchange", updateActiveHash);
+    return () => window.removeEventListener("hashchange", updateActiveHash);
+  });
 
   function openMenu() {
     if (dialog.open) return;
@@ -224,13 +236,17 @@
         {#each links as link (link.href)}
           <a
             class="menu-link group flex items-center justify-between gap-5 font-heading text-[clamp(42px,6.7vw,92px)] leading-[1.15] transition-[color] duration-200 ease-[ease] hover:text-accent mobile:text-[clamp(42px,10.5vw,72px)] mobile:leading-[1.25]"
+            class:text-accent={activeHash === link.href}
             href={link.href}
+            aria-current={activeHash === link.href ? "location" : undefined}
             onclick={(event) => navigate(event, link.href)}
-            ><span>{link.label}</span><ArrowUpRightIcon
+          >
+            <span>{link.label}</span>
+            <ArrowUpRightIcon
               size={36}
               class="opacity-0 transition-opacity duration-200 ease-[ease] group-hover:opacity-100 group-focus-visible:opacity-100 mobile:w-6 mobile:text-muted mobile:opacity-100"
-            /></a
-          >
+            />
+          </a>
         {/each}
       </nav>
     </div>
