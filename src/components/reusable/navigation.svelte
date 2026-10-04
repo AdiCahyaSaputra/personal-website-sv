@@ -166,7 +166,7 @@
   </span>
 {/snippet}
 
-<header class="fixed inset-x-0 top-0 z-30 bg-[#101010]/30 backdrop-blur-md">
+<header class="fixed inset-x-0 top-0 z-30 bg-[#101010]">
   <div class="shell flex h-23 items-center justify-between mobile:h-19">
     <a
       class="block size-11"
@@ -238,9 +238,10 @@
       class="flex items-center justify-between gap-6 border-t border-t-line py-6 text-[12px] leading-[1.8] mobile:flex-col mobile:[align-items:start] mobile:gap-3"
     >
       <p>
-        Adi Cahya Saputra<br /><span class="text-[11px] text-muted"
-          >Full stack developer · Jakarta, ID</span
-        >
+        Adi Cahya Saputra<br />
+        <span class="text-[11px] text-muted">
+          Full stack developer · Jakarta, ID
+        </span>
       </p>
       <ContactLinks compact />
     </div>
