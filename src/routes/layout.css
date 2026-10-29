@@ -1,10 +1,12 @@
 @import "@fontsource/bebas-neue";
 @import "@fontsource-variable/inter";
+@import "@fontsource/pangolin";
 @import "tailwindcss";
 
 @theme {
   --font-heading: "Bebas Neue", sans-serif;
   --font-sans: "Inter Variable", sans-serif;
+  --font-writer: "Pangolin", cursive;
 }
 
 @theme inline {
