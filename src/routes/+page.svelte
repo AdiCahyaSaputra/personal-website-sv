@@ -6,7 +6,7 @@
 </script>
 
 <main class="relative">
-  <BottomBlur />
+  <!-- <BottomBlur /> -->
 
   <HallSection />
 
