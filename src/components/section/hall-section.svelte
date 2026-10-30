@@ -72,7 +72,12 @@
       class="text-center font-writer text-5xl leading-[1.08] font-bold text-black md:text-8xl"
     >
       Agnostic
-      <EncryptedText texts={["Framework", "AI Tools"]} interval={3000} /><br />
+      <br />
+      <EncryptedText
+        texts={["Framework", "Platform", "AI Tools"]}
+        interval={3000}
+      />
+      <br />
       Programmer
     </h1>
     <p class="text-black/60 md:text-xl text-sm max-w-1/2 md:w-full text-center">
@@ -87,6 +92,7 @@
             href={contact.href}
             aria-label={contact.label}
             title={contact.label}
+            target="_blank"
             class="inline-flex size-11 items-center justify-center rounded-full text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
           >
             {#if contact.label === "GitHub"}
