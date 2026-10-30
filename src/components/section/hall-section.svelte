@@ -5,7 +5,7 @@
 </script>
 
 <section
-	class="w-full h-screen bg-black px-4 py-10 md:p-10 flex justify-center items-center"
+	class="w-full h-screen bg-black p-4 md:p-10 flex justify-center items-center"
 >
 	<div
 		class="bg-background w-full h-full rounded-lg flex flex-col justify-center items-center gap-8 relative"
