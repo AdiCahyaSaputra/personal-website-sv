@@ -2,6 +2,7 @@
 @import "@fontsource-variable/inter";
 @import "@fontsource/pangolin";
 @import "tailwindcss";
+@import "locomotive-scroll/dist/locomotive-scroll.css";
 
 @theme {
   --font-heading: "Bebas Neue", sans-serif;
@@ -35,6 +36,11 @@
 html {
   @apply scroll-smooth scroll-pt-28 [scrollbar-gutter:stable] select-none;
 }
+
+html.lenis {
+  @apply scroll-auto;
+}
+
 body {
   @apply m-0 min-w-[320px];
 }

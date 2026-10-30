@@ -7,6 +7,7 @@
 </script>
 
 <main class="relative">
+	<Navbar />
   <BottomBlur />
 
   <HallSection />
