@@ -66,6 +66,49 @@ def area(name, *, location, target, color, energy, size):
     return light
 
 
+def keyboard(*, keys, marks):
+    rows = [
+        [('Escape', 1.5)] + [(f'F{index}', 1) for index in range(1, 13)] + [('Touch ID', 1.5)],
+        [(key, 1) for key in '`1234567890-='] + [('Delete', 2)],
+        [('Tab', 1.5)] + [(key, 1) for key in 'QWERTYUIOP[]'] + [('Backslash', 1.5)],
+        [('Caps Lock', 1.75)] + [(key, 1) for key in "ASDFGHJKL;'"] + [('Return', 2.25)],
+        [('Left Shift', 2.25)] + [(key, 1) for key in 'ZXCVBNM,./'] + [('Right Shift', 2.75)],
+        [('Fn', 1), ('Control', 1), ('Left Option', 1), ('Left Command', 1.25),
+         ('Space bar', 5.75), ('Right Command', 1.25), ('Right Option', 1),
+         ('Left Arrow', 11 / 12), ('Down Arrow', 11 / 12), ('Right Arrow', 11 / 12)],
+    ]
+    pitch = 0.162
+    gap = 0.018
+    left = -15 * pitch / 2
+
+    for row_index, row in enumerate(rows):
+        x = left
+        y = 0.57 - row_index * 0.164
+        height = 0.095 if row_index == 0 else 0.14
+
+        for name, units in row:
+            width = units * pitch - gap
+            center_x = x + units * pitch / 2
+            is_arrow = name.endswith('Arrow')
+            key_height = (height - gap) / 2 if is_arrow else height
+            center_y = y - (height + gap) / 4 if is_arrow else y
+            box(f'Key {name}', location=(center_x, center_y, 0.89),
+                size=(width, key_height, 0.022), mat=keys, bevel=0.015)
+
+            if name != 'Space bar':
+                box(f'Legend {name}', location=(center_x, center_y, 0.902),
+                    size=(0.033, 0.008, 0.001), mat=marks, bevel=0.002)
+
+            if name == 'Down Arrow':
+                up_y = y + (height + gap) / 4
+                box('Key Up Arrow', location=(center_x, up_y, 0.89),
+                    size=(width, key_height, 0.022), mat=keys, bevel=0.015)
+                box('Legend Up Arrow', location=(center_x, up_y, 0.902),
+                    size=(0.033, 0.008, 0.001), mat=marks, bevel=0.002)
+
+            x += units * pitch
+
+
 def scene(project, colors):
     bpy.ops.object.select_all(action='SELECT')
     bpy.ops.object.delete(use_global=False)
@@ -97,14 +140,7 @@ def scene(project, colors):
     # Hardware proportions follow the 14-inch chassis: 31.26 by 22.12 cm.
     box('MacBook lower chassis', location=(0, -0.20, 0.79), size=(3.126, 2.212, 0.155), mat=graphite, bevel=0.075)
     box('Keyboard recess', location=(0, 0.12, 0.875), size=(2.57, 1.04, 0.018), mat=glass, bevel=0.05)
-    for row in range(6):
-        for col in range(14):
-            x = (col - 6.5) * 0.173
-            y = 0.57 - row * 0.164
-            box(f'Key {row}:{col}', location=(x, y, 0.89), size=(0.151, 0.14, 0.022), mat=keys, bevel=0.023)
-            box(f'Legend {row}:{col}', location=(x, y, 0.902), size=(0.033, 0.008, 0.001), mat=marks, bevel=0.002)
-
-    box('Space bar', location=(0, -0.25, 0.907), size=(0.91, 0.14, 0.019), mat=keys, bevel=0.02)
+    keyboard(keys=keys, marks=marks)
     box('Trackpad seam', location=(0, -0.83, 0.873), size=(1.25, 0.69, 0.008), mat=glass, bevel=0.055)
     box('Glass trackpad', location=(0, -0.83, 0.879), size=(1.23, 0.67, 0.008), mat=graphite, bevel=0.05)
     for side in [-1, 1]:
@@ -116,8 +152,14 @@ def scene(project, colors):
     lid = bpy.context.object
     lid.name = 'Display hinge'
     lid.rotation_euler.x = math.radians(-7)
-    box('Aluminum display lid', location=(0, 0, 1.015), size=(3.105, 0.065, 2.03), mat=graphite, bevel=0.065, parent=lid)
-    box('Display glass', location=(0, -0.038, 1.015), size=(3.055, 0.018, 1.97), mat=glass, bevel=0.055, parent=lid)
+    lid_width, lid_height = 3.105, 2.03
+    glass_inset = 0.025
+    screen_inset = 0.070
+    box('Aluminum display lid', location=(0, 0, lid_height / 2),
+        size=(lid_width, 0.065, lid_height), mat=graphite, bevel=0.065, parent=lid)
+    box('Display glass', location=(0, -0.038, lid_height / 2),
+        size=(lid_width - 2 * glass_inset, 0.018, lid_height - 2 * glass_inset),
+        mat=glass, bevel=0.055, parent=lid)
 
     screen = bpy.data.materials.new('Project screenshot')
     screen.use_nodes = True
@@ -132,8 +174,26 @@ def scene(project, colors):
     shader.inputs['Roughness'].default_value = 0.7
     shader.inputs['Specular IOR Level'].default_value = 0.08
 
-    w, h = 2.965, 1.925
-    vertices = [(-w/2, -0.050, 0.065), (w/2, -0.050, 0.065), (w/2, -0.050, h+0.065), (-w/2, -0.050, h+0.065)]
+    camera_image = image.copy()
+    camera_image.name = f'{project} camera preview'
+    camera_image.colorspace_settings.name = 'AgX Base sRGB'
+    camera_image.pack()
+    camera_texture = screen.node_tree.nodes.new('ShaderNodeTexImage')
+    camera_texture.image = camera_image
+    emission = screen.node_tree.nodes.new('ShaderNodeEmission')
+    screen.node_tree.links.new(camera_texture.outputs['Color'], emission.inputs['Color'])
+    light_path = screen.node_tree.nodes.new('ShaderNodeLightPath')
+    camera_surface = screen.node_tree.nodes.new('ShaderNodeMixShader')
+    screen.node_tree.links.new(light_path.outputs['Is Camera Ray'], camera_surface.inputs[0])
+    screen.node_tree.links.new(shader.outputs['BSDF'], camera_surface.inputs[1])
+    screen.node_tree.links.new(emission.outputs['Emission'], camera_surface.inputs[2])
+    output = screen.node_tree.nodes.get('Material Output')
+    screen.node_tree.links.new(camera_surface.outputs[0], output.inputs['Surface'])
+
+    w = lid_width - 2 * screen_inset
+    h = lid_height - 2 * screen_inset
+    vertices = [(-w/2, -0.050, screen_inset), (w/2, -0.050, screen_inset),
+                (w/2, -0.050, lid_height - screen_inset), (-w/2, -0.050, lid_height - screen_inset)]
     mesh = bpy.data.meshes.new('Display pixels')
     mesh.from_pydata(vertices, [], [(0, 1, 2, 3)])
     mesh.uv_layers.new()
@@ -158,9 +218,12 @@ def scene(project, colors):
     bpy.context.collection.objects.link(display)
     display.parent = lid
     mesh.materials.append(screen)
-    box('Camera notch', location=(0, -0.064, 1.956), size=(0.31, 0.019, 0.075), mat=glass, bevel=0.02, parent=lid)
+    notch_height = 0.075
+    notch_center = lid_height - glass_inset - notch_height / 2
+    box('Camera notch', location=(0, -0.064, notch_center),
+        size=(0.31, 0.019, notch_height), mat=glass, bevel=0.02, parent=lid)
     lens = material('Camera lens', (0.025, 0.040, 0.065), metallic=0.55, roughness=0.14)
-    box('FaceTime camera', location=(0, -0.076, 1.958), size=(0.025, 0.008, 0.025), mat=lens, bevel=0.012, parent=lid)
+    box('FaceTime camera', location=(0, -0.076, notch_center), size=(0.025, 0.008, 0.025), mat=lens, bevel=0.012, parent=lid)
 
     area('Large softbox', location=(-3.5,-4,6), target=(0,0,1), color=(0.85,0.91,1), energy=420, size=4)
     area('Backdrop wash', location=(-2,0.2,1.7), target=(0,2,2.5), color=light_color, energy=85, size=2)
@@ -177,8 +240,8 @@ def scene(project, colors):
     render.render.engine = 'CYCLES'
     render.cycles.samples = 12 if args.draft else 64
     render.cycles.use_denoising = True
-    render.render.resolution_x = 1400
-    render.render.resolution_y = 1050
+    render.render.resolution_x = 2800
+    render.render.resolution_y = 2100
     render.render.resolution_percentage = 50 if args.draft else 100
     render.render.image_settings.file_format = 'PNG'
     render.world.use_nodes = True

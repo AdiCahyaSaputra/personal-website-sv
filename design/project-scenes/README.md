@@ -13,6 +13,26 @@ uv run design/project-scenes/export.py
 
 Append `-- --project twillink --draft` to the Blender command for a fast preview. Draft mode overwrites that project's PNG and Blender file; rerun without `--draft` before exporting the website assets.
 
-Final renders are 1400 × 1050 PNGs under `static/assets/project-scenes/`. The exporter creates compressed WebP copies used by the project section. To change the palette, edit `PROJECTS` in `render.py`. To replace a screenshot, update the corresponding original WebP and regenerate.
+The keyboard uses a staggered 78-key ANSI layout, with a short function row, wider modifiers, and inverted-T arrow keys. Check all saved scenes for overlapping keys, misplaced legends, and recess containment with:
+
+```sh
+/Applications/Blender.app/Contents/MacOS/Blender --background --python design/project-scenes/verify-keyboard.py
+```
+
+Append `-- --preview /tmp/macbook-keyboard.png` to also render a top view without changing the saved scenes.
+
+The display opening and cover glass each use a uniform inset from the lid on all four edges. Verify the saved geometry and optionally render a straight-on view with:
+
+```sh
+/Applications/Blender.app/Contents/MacOS/Blender --background --python design/project-scenes/verify-display.py -- --preview /tmp/macbook-display.png
+```
+
+Camera-visible screenshot textures use Blender's `AgX Base sRGB` inverse view transform and an unlit emission surface to preserve the source colors through AgX. Other rays keep the original screen material so the surrounding lighting and reflections retain their appearance. Render the saved display materials and compare their colors with the source screenshots using:
+
+```sh
+/Applications/Blender.app/Contents/MacOS/Blender --background --python-exit-code 1 --python design/project-scenes/verify-preview-colors.py
+```
+
+Final renders are 2800 × 2100 PNGs under `static/assets/project-scenes/`. The exporter creates quality-95 WebP copies used by the project section. To change the palette, edit `PROJECTS` in `render.py`. To replace a screenshot, update the corresponding original WebP and regenerate.
 
 The approved layout exploration is archived on the local Git branch `prototype/projects-approved`. The selected stacked cards are implemented in `src/components/section/project-section.svelte`.

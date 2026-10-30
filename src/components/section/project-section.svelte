@@ -2,6 +2,7 @@
   import { gsap } from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { PROJECTS } from "$lib/constants/projects";
+  import { ArrowUpIcon, ArrowUpRightIcon } from "phosphor-svelte";
 
   function stackCards(node: HTMLElement) {
     gsap.registerPlugin(ScrollTrigger);
@@ -38,7 +39,7 @@
 
           if (next && panel) {
             gsap.to(panel, {
-              scale: 0.95,
+              scale: 1 - cards.length / 100 + index / 100, // len = 3, so it start 0.97, 0.98, 0.99
               transformOrigin: "50% 0%",
               ease: "none",
               scrollTrigger: {
@@ -66,12 +67,12 @@
 </script>
 
 <section id="work" class="bg-black" aria-label="Selected projects">
-  <div class="shell pt-20 pb-30 max-[900px]:pt-12">
+  <div class="md:px-10 px-4 pt-20 pb-30 max-[900px]:pt-12">
     <header
       class="mb-14 flex justify-center gap-8 max-[900px]:mb-8 max-[900px]:flex-col max-[900px]:items-start max-[900px]:gap-6"
     >
       <h2 class="mt-6 font-writer text-5xl md:text-8xl font-bold text-center">
-        Project That I Proud <br />to Share
+        Project That I Proud <br />to Showcase
       </h2>
     </header>
 
@@ -98,13 +99,14 @@
               class="flex flex-col justify-between gap-8 p-9 max-[900px]:gap-7 max-[900px]:p-6"
             >
               <div class="flex justify-between gap-3 text-[#62605e]">
-                <span class="eyebrow text-[9px]"
-                  >0{index + 1} / 0{PROJECTS.length}</span
-                ><span class="eyebrow text-[9px]"
-                  >{project.hashtag.includes("personal")
+                <span class="eyebrow text-[9px]">
+                  0{index + 1} / 0{PROJECTS.length}
+                </span>
+                <span class="eyebrow text-[9px]">
+                  {project.hashtag.includes("personal")
                     ? "Personal project"
-                    : "Team project"}</span
-                >
+                    : "Team project"}
+                </span>
               </div>
               <div>
                 <h3
@@ -131,10 +133,10 @@
                   href={project.demoUrl}
                   target="_blank"
                   rel="external noopener noreferrer"
-                  >Visit project <span class="text-[24px]" aria-hidden="true"
-                    >↗</span
-                  ><span class="sr-only"> (opens in a new tab)</span></a
                 >
+                  Visit project
+                  <ArrowUpRightIcon class="inline-block h-4 w-4" />
+                </a>
               {/if}
             </div>
             <div

@@ -12,6 +12,6 @@ for source in sorted(directory.glob('*-macbook.png')):
     target = source.with_name(source.stem.removesuffix('-macbook') + '.webp')
 
     with Image.open(source) as image:
-        image.convert('RGB').save(target, quality=88, method=6)
+        image.convert('RGB').save(target, quality=95, method=6)
 
     print(f'{target.name}: {target.stat().st_size / 1024:.0f} KB')
