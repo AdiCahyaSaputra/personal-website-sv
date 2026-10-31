@@ -31,8 +31,8 @@
   let labelWidth = $state(0);
 
   function measureLinks(element: HTMLDivElement) {
-    const observer = new ResizeObserver(() => {
-      linksWidth = element.getBoundingClientRect().width;
+    const observer = new ResizeObserver(([entry]) => {
+      linksWidth = entry.borderBoxSize[0].inlineSize;
     });
 
     observer.observe(element);
@@ -41,8 +41,8 @@
   }
 
   function measureLabel(element: HTMLSpanElement) {
-    const observer = new ResizeObserver(() => {
-      labelWidth = element.getBoundingClientRect().width;
+    const observer = new ResizeObserver(([entry]) => {
+      labelWidth = entry.borderBoxSize[0].inlineSize;
     });
 
     observer.observe(element);

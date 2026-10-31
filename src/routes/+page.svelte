@@ -4,12 +4,14 @@
 
   import HallSection from "@/components/section/hall-section.svelte";
   import ProjectSection from "@/components/section/project-section.svelte";
+  import ExperienceSection from "@/components/section/experience-section.svelte";
 </script>
 
-<main class="relative">
-	<Navbar />
+<main class="relative overflow-x-hidden">
+  <Navbar />
   <BottomBlur />
 
   <HallSection />
   <ProjectSection />
+  <ExperienceSection />
 </main>

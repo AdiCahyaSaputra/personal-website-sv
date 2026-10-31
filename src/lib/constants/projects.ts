@@ -8,7 +8,7 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
-    title: "twillink",
+    title: "Twillink",
     description:
       "A UGC storefront where brands and creators collaborate and turn social content into a shoppable experience.",
     hashtag: ["crosva", "fullstack", "web"],
@@ -16,15 +16,15 @@ export const PROJECTS: Project[] = [
     demoUrl: "https://twillink.com",
   },
   {
-    title: "yufo trade",
+    title: "Yufo Trade",
     description:
       "A supply platform for tradies, connecting product ordering, delivery, and supplier workflows across web and mobile.",
-    hashtag: ["crosva", "fullstack", "web", "mobile"],
+    hashtag: ["crosva", "fullstack", "web & mobile"],
     imgUrl: "/assets/project/yufo.webp",
     demoUrl: "https://yufotrade.com",
   },
   {
-    title: "forumgw",
+    title: "ForumGW",
     description:
       "A community forum for open and anonymous discussions, built with a type-safe web stack.",
     hashtag: ["personal", "fullstack", "web"],

@@ -5,6 +5,7 @@
 </script>
 
 <section
+  id="home"
   class="w-full h-screen bg-black p-4 md:p-10 flex justify-center items-center"
 >
   <div
