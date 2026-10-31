@@ -11,7 +11,7 @@ export const PROJECTS: Project[] = [
     title: "Twillink",
     description:
       "A UGC storefront where brands and creators collaborate and turn social content into a shoppable experience.",
-    hashtag: ["crosva", "fullstack", "web"],
+    hashtag: ["Crosva", "Fullstack", "Web"],
     imgUrl: "/assets/project/twillink.webp",
     demoUrl: "https://twillink.com",
   },
@@ -19,7 +19,7 @@ export const PROJECTS: Project[] = [
     title: "Yufo Trade",
     description:
       "A supply platform for tradies, connecting product ordering, delivery, and supplier workflows across web and mobile.",
-    hashtag: ["crosva", "fullstack", "web & mobile"],
+    hashtag: ["Crosva", "Fullstack", "Web & Mobile"],
     imgUrl: "/assets/project/yufo.webp",
     demoUrl: "https://yufotrade.com",
   },
@@ -27,7 +27,7 @@ export const PROJECTS: Project[] = [
     title: "ForumGW",
     description:
       "A community forum for open and anonymous discussions, built with a type-safe web stack.",
-    hashtag: ["personal", "fullstack", "web"],
+    hashtag: ["Personal", "Fullstack", "Web"],
     imgUrl: "/assets/project/forumgw.webp",
     demoUrl: "https://forumgw.vercel.app",
   },

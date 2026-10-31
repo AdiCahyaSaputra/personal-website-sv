@@ -11,7 +11,7 @@
   items={[
     { label: "Home", href: "#home" },
     { label: "Work", href: "#work" },
-    { label: "Experience", href: "#experience" },
+    { label: "Stack", href: "#stack" },
     { label: "Contact", href: "#contact" },
   ]}
 />
