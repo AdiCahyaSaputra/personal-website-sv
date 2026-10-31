@@ -61,10 +61,9 @@
   >
     {#each TECH_STACKS as skill, index (skill.name)}
       <li
-        class="grid aspect-square min-w-0 grid-rows-[auto_1fr_auto] rounded-sm border p-2 sm:p-3 lg:nth-[2]:col-start-8 lg:nth-[5]:col-start-5 lg:nth-[17]:col-start-3 {index >=
-        16
-          ? 'lg:mt-4'
-          : ''} {groupStyles.get(skill.group)}"
+        class="grid aspect-square min-w-0 grid-rows-[auto_1fr_auto] rounded-sm border p-2 sm:p-3 lg:nth-[2]:col-start-8 lg:nth-[5]:col-start-5 lg:nth-[17]:col-start-3 {groupStyles.get(
+          skill.group,
+        )}"
         aria-label={`${skill.name}, ${skill.group}`}
       >
         <div class="flex items-center justify-between gap-2" aria-hidden="true">
@@ -74,7 +73,7 @@
           <img
             src={skill.icon}
             alt=""
-            class="size-4 shrink-0 object-contain sm:size-5"
+            class="size-16 shrink-0 object-contain sm:size-5"
             loading="lazy"
           />
         </div>
