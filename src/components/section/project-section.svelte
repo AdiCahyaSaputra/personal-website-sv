@@ -1,7 +1,26 @@
 <script lang="ts">
+  import { ArrowUpRightIcon } from "phosphor-svelte";
   import { PROJECTS } from "$lib/constants/projects";
   import { stackCards, progressingTitle } from "$lib/animations/project";
+
+  let cursorX = $state(0);
+  let cursorY = $state(0);
+  let cursorVisible = $state(false);
+
+  function followCursor(event: PointerEvent) {
+    if (event.pointerType !== "mouse") return;
+
+    cursorX = event.clientX;
+    cursorY = event.clientY;
+    cursorVisible = true;
+  }
+
+  function hideCursor() {
+    cursorVisible = false;
+  }
 </script>
+
+<svelte:window onblur={hideCursor} />
 
 <section id="work" class="bg-black" aria-label="Selected projects">
   <div class="md:px-10 px-4 pt-32 max-[900px]:pt-12">
@@ -58,9 +77,38 @@
                 {/each}
               </ul>
             </div>
+
+            {#if project.demoUrl}
+              <a
+                href={project.demoUrl}
+                onpointerenter={followCursor}
+                onpointermove={followCursor}
+                onpointerleave={hideCursor}
+                onpointercancel={hideCursor}
+                onclick={hideCursor}
+                aria-label={`View ${project.title} demo`}
+                class={[
+                  "absolute inset-0 z-3 rounded-lg focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-white",
+                  cursorVisible &&
+                    "[@media(hover:hover)_and_(pointer:fine)]:cursor-none",
+                ]}
+              ></a>
+            {/if}
           </div>
         </article>
       {/each}
     </div>
   </div>
 </section>
+
+<div
+  class={[
+    "pointer-events-none fixed left-(--cursor-x) top-(--cursor-y) z-1000 hidden size-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center border border-black/10 rounded-full bg-white text-black transition-[opacity,scale] duration-180 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none [@media(hover:hover)_and_(pointer:fine)]:flex",
+    cursorVisible ? "scale-100 opacity-100" : "scale-35 opacity-0",
+  ]}
+  style:--cursor-x={`${cursorX}px`}
+  style:--cursor-y={`${cursorY}px`}
+  aria-hidden="true"
+>
+  <ArrowUpRightIcon size={24} weight="bold" />
+</div>
