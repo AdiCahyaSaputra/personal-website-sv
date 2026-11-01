@@ -1,10 +1,14 @@
 @import "@fontsource/bebas-neue";
 @import "@fontsource-variable/inter";
+@import "@fontsource/pangolin";
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "locomotive-scroll/dist/locomotive-scroll.css";
 
 @theme {
   --font-heading: "Bebas Neue", sans-serif;
   --font-sans: "Inter Variable", sans-serif;
+  --font-writer: "Pangolin", cursive;
 }
 
 @theme inline {
@@ -12,6 +16,8 @@
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-accent: var(--accent);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
 }
 
 @custom-variant mobile (@media (max-width: 767px));
@@ -23,12 +29,19 @@
   --muted: #a3a3a3;
   --line: #303030;
   --accent: var(--color-red-600);
+  --foreground: #000;
+  --background: #fff;
   color-scheme: dark;
 }
 
 html {
-  @apply scroll-smooth scroll-pt-28 [scrollbar-gutter:stable];
+  @apply scroll-smooth scrollbar-none select-none;
 }
+
+html.lenis {
+  @apply scroll-auto;
+}
+
 body {
   @apply m-0 min-w-[320px];
 }

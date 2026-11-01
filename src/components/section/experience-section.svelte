@@ -1,55 +1,52 @@
 <script lang="ts">
-  import { EXPERIENCE, type Experience } from "$lib/constants/experience";
-  import { cn } from "cn";
-  const experience = [...EXPERIENCE].reverse().reduce((acc, exp) => {
-    acc.push({
-      ...exp,
-      sameYear: acc.some((r) => r.year === exp.year),
-    });
+  import { EXPERIENCE } from "$lib/constants/experience";
+  import { scrollYears } from "$lib/animations/experience";
 
-    return acc;
-  }, [] as Experience[]);
+  const years = [...new Set(EXPERIENCE.map((role) => role.year))].sort(
+    (a, b) => b - a,
+  );
+  const span = Math.max(...years) - Math.min(...years);
 </script>
 
-<section
-  id="experience"
-  class="section shell lg:grid lg:grid-cols-[0.85fr_1.5fr] lg:items-start lg:gap-16"
-  aria-labelledby="experience-heading"
-  tabindex="-1"
->
-  <div class="section-intro lg:mb-0 lg:flex-col lg:items-start lg:gap-6" data-experience-intro>
-    <h2 id="experience-heading" class="section-heading">
-      Experience<span class="text-red-600">.</span>
+<section id="experience" aria-label="Experience" class="pb-24">
+  <div class="flex flex-col gap-4 p-4 md:p-10" {@attach scrollYears}>
+    <h2
+      class="font-heading text-4xl leading-tight text-[#e5e2dc] md:text-8xl md:w-full w-1/2"
+    >
+      {span} years of experience
     </h2>
-    <p class="section-copy">
-      My path through software development,<br /> starting in 2023.
-    </p>
-  </div>
-  <ol>
-    {#each experience as role (`${role.at}-${role.experience}`)}
-      <li
-        class="grid grid-cols-[1fr_3fr_1fr] items-baseline gap-6 border-t border-t-line py-7.5 mobile:grid-cols-[44px_1fr] mobile:gap-x-5 mobile:gap-y-2.5 mobile:py-6"
-        data-experience-row
-      >
-        <span
-          class={cn(
-            "text-base text-muted tabular-nums",
-            role.sameYear && "opacity-0",
-          )}>{role.year}</span
+    <div data-year-deck class="relative flex flex-col gap-4">
+      {#each years as year (year)}
+        <article
+          data-year-sheet
+          class="relative flex min-h-120 w-full max-w-105 flex-col justify-between gap-6 rounded-lg border border-black/15 bg-[#e6e3dc] p-6 text-[#181818] shadow-[-8px_0_24px_#00000012]"
+          aria-labelledby={`stack-year-${year}`}
         >
-        <div>
-          <h3 class="text-[clamp(17px,2vw,23px)] font-[450] tracking-tight">
-            {role.experience}
+          <h3
+            id={`stack-year-${year}`}
+            class="font-heading text-7xl leading-none tracking-tight"
+          >
+            {year}
           </h3>
-          <p class="mt-2 text-sm leading-[1.7] text-muted">
-            {role.at.replace(/^at /, "")}
-          </p>
-        </div>
-        <span
-          class="[justify-self:end] text-base text-muted capitalize mobile:col-start-2 mobile:[justify-self:start]"
-          >{role.type}</span
-        >
-      </li>
-    {/each}
-  </ol>
+          <div class="space-y-6">
+            {#each EXPERIENCE.filter((role) => role.year === year) as role (role.at)}
+              <div>
+                <p
+                  class="mb-2 text-[10px] tracking-[0.15em] text-black/55 uppercase"
+                >
+                  {role.type}
+                </p>
+                <h4 class="text-[22px] leading-tight tracking-tight">
+                  {role.experience}
+                </h4>
+                <p class="mt-2 text-sm leading-relaxed text-black/60">
+                  {role.at}
+                </p>
+              </div>
+            {/each}
+          </div>
+        </article>
+      {/each}
+    </div>
+  </div>
 </section>

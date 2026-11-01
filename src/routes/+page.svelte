@@ -1,25 +1,25 @@
 <script lang="ts">
-  import { animatePortfolio } from "$lib/animations/portfolio";
-  import Navigation from "@/components/reusable/navigation.svelte";
-  import HallSection from "@/components/section/hall-section.svelte";
-  import ProfileSection from "@/components/section/profile-section.svelte";
-  import ProjectSection from "@/components/section/project-section.svelte";
-  import TechStackSection from "@/components/section/tech-stack-section.svelte";
-  import ExperienceSection from "@/components/section/experience-section.svelte";
-  import ContactSection from "@/components/section/contact-section.svelte";
+  import BottomBlur from "@/components/reusable/bottom-blur.svelte";
+  import Navbar from "@/components/reusable/navbar.svelte";
 
+  import HallSection from "@/components/section/hall-section.svelte";
+  import ProjectSection from "@/components/section/project-section.svelte";
+  import SkillSection from "@/components/section/skill-section.svelte";
+  import ExperienceSection from "@/components/section/experience-section.svelte";
+  import { startLoopSection } from "$lib/utils/loop-section";
 </script>
 
-<a
-  class="fixed top-3 left-5 z-40 -translate-y-[200%] bg-white px-5 py-3 text-black focus:translate-y-0"
-  href="#main">Skip to content</a
+<main
+  id="main"
+  class="relative overflow-x-hidden bg-foreground"
+  {@attach startLoopSection}
 >
-<Navigation />
-<main id="main" tabindex="-1" {@attach animatePortfolio}>
+  <Navbar />
+  <BottomBlur />
+
   <HallSection />
-  <ProfileSection />
   <ProjectSection />
-  <TechStackSection />
+  <SkillSection />
   <ExperienceSection />
-  <ContactSection />
+  <HallSection isLastChild />
 </main>

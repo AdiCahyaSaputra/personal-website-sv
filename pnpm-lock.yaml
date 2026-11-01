@@ -175,6 +175,9 @@ importers:
       '@fontsource/bebas-neue':
         specifier: ^5.3.0
         version: 5.3.0
+      '@fontsource/pangolin':
+        specifier: ^5.3.0
+        version: 5.3.0
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -579,6 +582,9 @@ packages:
 
   '@fontsource/bebas-neue@5.3.0':
     resolution: {integrity: sha512-nCxMEb9Bg9sjNWm9TIOsvHKDMLRUfEZPWpLgYu6m9KavZZVSA/WoHzI5wROwqA+eNwEi/PNBAcB5Co7HA3S0Cw==}
+
+  '@fontsource/pangolin@5.3.0':
+    resolution: {integrity: sha512-3avtyqWX2QiQXKxVChWeVtF3FpB/wcojYXP13oO30WG44Ox9bCUHuHEtMd6NVgqpXSUqNLFaLm8K+29xVzkDZQ==}
 
   '@hono/node-server@2.1.1':
     resolution: {integrity: sha512-ELuehkj5VCBdgEw9zs+ivkKwyzzUCSQuE96YmiPvn1ECBoZCczbFXJLeEGMTYjphP6gydh4pHMqEYPVMYUVgQg==}
@@ -2815,6 +2821,8 @@ snapshots:
   '@fontsource-variable/inter@5.3.0': {}
 
   '@fontsource/bebas-neue@5.3.0': {}
+
+  '@fontsource/pangolin@5.3.0': {}
 
   '@hono/node-server@2.1.1(hono@4.13.7)':
     dependencies:
