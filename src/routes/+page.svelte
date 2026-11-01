@@ -8,7 +8,7 @@
   import ExperienceSection from "@/components/section/experience-section.svelte";
 </script>
 
-<main class="relative overflow-x-hidden bg-foreground">
+<main id="main" class="relative overflow-x-hidden bg-foreground">
   <Navbar />
   <BottomBlur />
 
@@ -16,4 +16,5 @@
   <ProjectSection />
   <SkillSection />
   <ExperienceSection />
+  <HallSection isLastChild />
 </main>
