@@ -20,7 +20,7 @@
         Agnostic
         <br />
         <EncryptedText
-          texts={["Framework", "Platform", "AI Tools"]}
+          texts={["Framework", "Platform", "Tools"]}
           interval={3000}
         />
         <br />

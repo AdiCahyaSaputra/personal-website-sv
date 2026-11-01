@@ -19,7 +19,7 @@
       {#each years as year (year)}
         <article
           data-year-sheet
-          class="relative flex min-h-120 w-full max-w-105 flex-col justify-between gap-6 rounded-lg border border-black/15 bg-[#e6e3dc] p-6 text-[#181818] shadow-[-8px_0_24px_#00000012]"
+          class="relative flex min-h-120 w-full max-w-105 flex-col justify-between gap-6 rounded-lg border border-black/15 bg-background p-6 text-foreground"
           aria-labelledby={`stack-year-${year}`}
         >
           <h3
@@ -31,12 +31,10 @@
           <div class="space-y-6">
             {#each EXPERIENCE.filter((role) => role.year === year) as role (role.at)}
               <div>
-                <p
-                  class="mb-2 text-[10px] tracking-[0.15em] text-black/55 uppercase"
-                >
+                <p class="mb-2 text-sm text-black uppercase font-bold">
                   {role.type}
                 </p>
-                <h4 class="text-[22px] leading-tight tracking-tight">
+                <h4 class="text-4xl font-heading">
                   {role.experience}
                 </h4>
                 <p class="mt-2 text-sm leading-relaxed text-black/60">
@@ -48,5 +46,8 @@
         </article>
       {/each}
     </div>
+    <h1 class="font-heading text-4xl mt-16 text-white/40 text-right">
+      Its not ended here though...
+    </h1>
   </div>
 </section>
