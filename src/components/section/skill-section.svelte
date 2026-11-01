@@ -24,12 +24,12 @@
 
     measure();
 
-    const observer = new ResizeObserver(measure);
-    observer.observe(node);
+    const resizeObserver = new ResizeObserver(measure);
+    resizeObserver.observe(node);
 
     return {
       destroy() {
-        observer.disconnect();
+        resizeObserver.disconnect();
       },
     };
   }
@@ -47,20 +47,23 @@
       }
     }
 
-    const frame = requestAnimationFrame(updatePosition);
-    const observer = new ResizeObserver(updatePosition);
-    observer.observe(node);
+    function onScrollOrResize() {
+      window.addEventListener("scroll", updatePosition, { passive: true });
+      window.addEventListener("resize", updatePosition);
+    }
 
-    window.addEventListener("scroll", updatePosition, { passive: true });
-    window.addEventListener("resize", updatePosition);
+    const frame = requestAnimationFrame(updatePosition);
+    const resizeObserver = new ResizeObserver(updatePosition);
+    resizeObserver.observe(node);
+
+    onScrollOrResize();
 
     return {
       destroy() {
         cancelAnimationFrame(frame);
-        observer.disconnect();
+        resizeObserver.disconnect();
 
-        window.removeEventListener("scroll", updatePosition);
-        window.removeEventListener("resize", updatePosition);
+        onScrollOrResize();
       },
     };
   }

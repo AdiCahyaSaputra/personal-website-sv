@@ -13,7 +13,7 @@
   >
     <div class="flex flex-col h-full justify-center gap-8">
       <h1
-        class="text-center font-writer text-6xl font-bold md:text-8xl text-foreground"
+        class="text-center font-heading text-6xl font-bold md:text-8xl text-foreground"
       >
         Agnostic
         <br />
