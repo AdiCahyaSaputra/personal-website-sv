@@ -87,3 +87,32 @@ with tempfile.TemporaryDirectory(prefix='macbook-preview-colors-') as temporary:
         assert len(errors) >= 150, f'{project}: too few smooth samples'
         assert mean(errors) < 0.01, f'{project}: mean color error {mean(errors):.4f}'
         assert max(errors) < 0.04, f'{project}: maximum color error {max(errors):.4f}'
+
+        if project == 'forumgw':
+            scene.compositing_node_group = None
+            scene.view_settings.view_transform = 'Standard'
+
+            for node in nodes:
+                if node.type == 'TEX_IMAGE':
+                    node.image.colorspace_settings.name = 'sRGB'
+
+            scene.render.filepath = str(Path(temporary) / 'forumgw-reference.png')
+            bpy.ops.render.render(write_still=True)
+            reference = bpy.data.images.load(scene.render.filepath, check_existing=False)
+            reference_pixels = reference.pixels[:]
+            text_errors = []
+
+            for y in range(math.ceil(bottom) + 3, math.floor(top) - 3):
+                for x in range(math.ceil(left) + 3, math.floor(right) - 3):
+                    expected = pixel(pixels=reference_pixels, width=width, x=x, y=y)
+
+                    if not 0.05 < mean(expected) < 0.8:
+                        continue
+
+                    actual = pixel(pixels=rendered_pixels, width=width, x=x, y=y)
+                    text_errors.extend(abs(a - b) for a, b in zip(actual, expected))
+
+            print(f'{project}: {len(text_errors) // 3} text/edge samples, '
+                  f'mean sRGB error {mean(text_errors):.4f}')
+            assert len(text_errors) > 3000, 'Too few text/edge samples'
+            assert mean(text_errors) < 0.01, 'Screenshot text differs from the sRGB reference'

@@ -109,6 +109,39 @@ def keyboard(*, keys, marks):
             x += units * pitch
 
 
+def composite_screenshot(*, scene, screen):
+    screen.pass_index = 1
+    scene.view_layers[0].use_pass_material_index = True
+    scene.view_layers[0].update_render_passes()
+    scene.view_settings.view_transform = 'Standard'
+    tree = bpy.data.node_groups.new('Studio AgX with original screenshot colors', 'CompositorNodeTree')
+    scene.compositing_node_group = tree
+    tree.interface.new_socket(name='Image', in_out='OUTPUT', socket_type='NodeSocketColor')
+    layers = tree.nodes.new('CompositorNodeRLayers')
+    layers.scene = scene
+    layers.layer = scene.view_layers[0].name
+
+    studio_agx = tree.nodes.new('CompositorNodeConvertColorSpace')
+    studio_agx.from_color_space = 'Linear Rec.709'
+    studio_agx.to_color_space = 'AgX Base sRGB'
+    tree.links.new(layers.outputs['Image'], studio_agx.inputs['Image'])
+    studio_linear = tree.nodes.new('CompositorNodeConvertColorSpace')
+    studio_linear.from_color_space = 'sRGB'
+    studio_linear.to_color_space = 'Linear Rec.709'
+    tree.links.new(studio_agx.outputs['Image'], studio_linear.inputs['Image'])
+
+    mask = tree.nodes.new('CompositorNodeIDMask')
+    mask.inputs['Index'].default_value = screen.pass_index
+    mask.inputs['Anti-Alias'].default_value = True
+    tree.links.new(layers.outputs['Material Index'], mask.inputs[0])
+    mix = tree.nodes.new('ShaderNodeMixRGB')
+    tree.links.new(mask.outputs[0], mix.inputs[0])
+    tree.links.new(studio_linear.outputs['Image'], mix.inputs[1])
+    tree.links.new(layers.outputs['Image'], mix.inputs[2])
+    output = tree.nodes.new('NodeGroupOutput')
+    tree.links.new(mix.outputs[0], output.inputs['Image'])
+
+
 def scene(project, colors):
     bpy.ops.object.select_all(action='SELECT')
     bpy.ops.object.delete(use_global=False)
@@ -174,12 +207,8 @@ def scene(project, colors):
     shader.inputs['Roughness'].default_value = 0.7
     shader.inputs['Specular IOR Level'].default_value = 0.08
 
-    camera_image = image.copy()
-    camera_image.name = f'{project} camera preview'
-    camera_image.colorspace_settings.name = 'AgX Base sRGB'
-    camera_image.pack()
     camera_texture = screen.node_tree.nodes.new('ShaderNodeTexImage')
-    camera_texture.image = camera_image
+    camera_texture.image = image
     emission = screen.node_tree.nodes.new('ShaderNodeEmission')
     screen.node_tree.links.new(camera_texture.outputs['Color'], emission.inputs['Color'])
     light_path = screen.node_tree.nodes.new('ShaderNodeLightPath')
@@ -197,7 +226,7 @@ def scene(project, colors):
     mesh = bpy.data.meshes.new('Display pixels')
     mesh.from_pydata(vertices, [], [(0, 1, 2, 3)])
     mesh.uv_layers.new()
-    crop = (0.184, 0.109, 0.688, 0.783) if project == 'forumgw' else (0, 0, 1, 1)
+    crop = (0, 0, 1, 1)
     x, y, cw, ch = crop
     image_ratio = image.size[0] * cw / (image.size[1] * ch)
     screen_ratio = w / h
@@ -247,7 +276,7 @@ def scene(project, colors):
     render.world.use_nodes = True
     render.world.node_tree.nodes.get('Background').inputs['Color'].default_value = (0.025, 0.025, 0.025, 1)
     render.world.node_tree.nodes.get('Background').inputs['Strength'].default_value = 0.3
-    render.view_settings.view_transform = 'AgX'
+    composite_screenshot(scene=render, screen=screen)
     output = ROOT / 'static/assets/project-scenes' / f'{project}-macbook.png'
     render.render.filepath = str(output)
     bpy.ops.wm.save_as_mainfile(filepath=str(ROOT / 'design/project-scenes' / f'{project}.blend'))

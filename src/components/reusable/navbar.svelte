@@ -12,6 +12,6 @@
     { label: "Home", href: "#home" },
     { label: "Work", href: "#work" },
     { label: "Stack", href: "#stack" },
-    { label: "Contact", href: "#contact" },
+    { label: "Experience", href: "#experience" },
   ]}
 />

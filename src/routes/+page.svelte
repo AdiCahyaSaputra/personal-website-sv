@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { dev } from "$app/environment";
-  import { page } from "$app/state";
   import BottomBlur from "@/components/reusable/bottom-blur.svelte";
   import Navbar from "@/components/reusable/navbar.svelte";
 

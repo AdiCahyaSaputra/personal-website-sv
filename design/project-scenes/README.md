@@ -2,7 +2,7 @@
 
 Original procedural Blender scenes for the home page project section. A graphite laptop modeled with 14-inch MacBook Pro proportions sits on a charcoal stone plinth, against a paneled plaster wall. Twillink uses violet lighting, Yufo amber, and ForumGW green. The hardware is an approximate visualization, not an exact Apple CAD model.
 
-Each `.blend` includes its screenshot texture, camera, lights, and materials. Open it in Blender and render with F12. The original screenshots remain unchanged in `static/assets/project/`; ForumGW's presentation board is cropped through the display UVs.
+Each `.blend` includes its screenshot texture, camera, lights, and materials. Open it in Blender and render with F12. Source screenshots live in `static/assets/project/` and are fitted to the display through its UVs. ForumGW uses the supplied application screenshot.
 
 Regenerate all scenes with Blender 5.2:
 
@@ -27,7 +27,7 @@ The display opening and cover glass each use a uniform inset from the lid on all
 /Applications/Blender.app/Contents/MacOS/Blender --background --python design/project-scenes/verify-display.py -- --preview /tmp/macbook-display.png
 ```
 
-Camera-visible screenshot textures use Blender's `AgX Base sRGB` inverse view transform and an unlit emission surface to preserve the source colors through AgX. Other rays keep the original screen material so the surrounding lighting and reflections retain their appearance. Render the saved display materials and compare their colors with the source screenshots using:
+Camera-visible screenshots use an unlit sRGB emission surface and Standard output. The compositor applies AgX to the studio through a material-index mask, leaving the screenshot's original colors intact. Applying the inverse AgX transform to a texture before filtering washes out small text, so screenshot textures must stay in sRGB. Other rays keep the original screen material for lighting and reflections. Render the saved display materials and compare their colors with the source screenshots using:
 
 ```sh
 /Applications/Blender.app/Contents/MacOS/Blender --background --python-exit-code 1 --python design/project-scenes/verify-preview-colors.py
