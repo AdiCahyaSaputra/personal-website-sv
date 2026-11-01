@@ -26,7 +26,7 @@
   <div class="md:px-10 px-4 pt-32 max-[900px]:pt-12">
     <header class="mb-8 flex justify-center gap-8 max-[900px]:mb-8">
       <h2
-        class="mt-8 lg:mt-4 font-heading text-4xl md:text-8xl font-bold text-center text-nowrap"
+        class="mt-8 lg:mt-4 font-heading text-4xl md:text-8xl font-bold md:text-center text-left text-wrap"
         {@attach progressingTitle}
       >
         Project That I Proud to Showcase
@@ -64,13 +64,15 @@
             <div
               class="absolute z-2 top-0 inset-x-0 p-4 flex justify-between items-center bg-linear-to-b from-black/50 to-transparent"
             >
-              <h2 class="lg:text-2xl text-lg font-bold font-sans">
+              <h2
+                class="lg:text-2xl text-lg font-bold font-sans break-all line-clamp-1"
+              >
                 {project.title}
               </h2>
               <ul class="flex">
                 {#each project.hashtag as tag (tag)}
                   <li
-                    class="py-1 px-2 bg-background text-foreground rounded-full lg:text-sm text-xs font-bold"
+                    class="py-1 px-2 bg-background text-foreground rounded-full lg:text-sm text-xs font-bold line-clamp-1 break-all"
                   >
                     {tag}
                   </li>

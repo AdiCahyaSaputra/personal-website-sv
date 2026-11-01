@@ -46,7 +46,9 @@
         </article>
       {/each}
     </div>
-    <h1 class="font-heading text-4xl mt-16 text-white/40 text-right">
+    <h1
+      class="font-heading text-4xl mt-4 text-white/40 text-right line-clamp-1 break-all"
+    >
       It's not ended here though...
     </h1>
   </div>

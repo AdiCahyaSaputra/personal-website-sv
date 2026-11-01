@@ -8,7 +8,7 @@
 
 <section
   id={isLastChild ? "home-loop" : "home"}
-  class="w-full h-screen bg-black p-4 md:p-10 flex justify-center items-center"
+  class="w-full h-dvh bg-black p-4 md:p-10 flex justify-center items-center"
 >
   <div
     class="bg-background w-full h-full rounded-lg flex flex-col justify-between items-center"
