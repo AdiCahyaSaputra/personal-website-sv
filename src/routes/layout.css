@@ -2,6 +2,7 @@
 @import "@fontsource-variable/inter";
 @import "@fontsource/pangolin";
 @import "tailwindcss";
+@import "tw-animate-css";
 @import "locomotive-scroll/dist/locomotive-scroll.css";
 
 @theme {
