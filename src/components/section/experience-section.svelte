@@ -47,7 +47,7 @@
       {/each}
     </div>
     <h1 class="font-heading text-4xl mt-16 text-white/40 text-right">
-      Its not ended here though...
+      It's not ended here though...
     </h1>
   </div>
 </section>
