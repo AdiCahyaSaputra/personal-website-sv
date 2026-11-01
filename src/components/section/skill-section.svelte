@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { TECH_STACKS } from "$lib/constants/skill";
   import EncryptedText from "../reusable/encrypted-text.svelte";
 
@@ -39,7 +39,23 @@
   ]);
 
   const groups = [...new Set(TECH_STACKS.map((skill) => skill.group))];
+
+  let selectedGroup = $state<string | null>(null);
+  let hoveredGroup = $state<string | null>(null);
+
+  const activeGroups = $derived(
+    new Set([selectedGroup, hoveredGroup].filter((group) => group !== null)),
+  );
 </script>
+
+<svelte:window
+  onkeydown={(event) => {
+    if (event.key === "Escape") {
+      selectedGroup = null;
+      hoveredGroup = null;
+    }
+  }}
+/>
 
 <section id="stack" class="mt-32 p-4 md:p-10">
   <div class="flex justify-between items-start">
@@ -60,10 +76,13 @@
     aria-label="Periodic table of my skills"
   >
     {#each TECH_STACKS as skill, index (skill.name)}
+      {@const isDimmed =
+        activeGroups.size > 0 && !activeGroups.has(skill.group)}
       <li
-        class="grid aspect-square min-w-0 grid-rows-[auto_1fr_auto] rounded-sm border p-2 sm:p-3 lg:nth-[2]:col-start-8 lg:nth-[5]:col-start-5 lg:nth-[17]:col-start-3 {groupStyles.get(
+        class="grid aspect-square min-w-0 grid-rows-[auto_1fr_auto] rounded-sm border p-2 transition-opacity duration-200 motion-reduce:transition-none sm:p-3 lg:nth-[2]:col-start-8 lg:nth-[5]:col-start-5 lg:nth-[17]:col-start-3 {groupStyles.get(
           skill.group,
         )}"
+        class:opacity-20={isDimmed}
         aria-label={`${skill.name}, ${skill.group}`}
       >
         <div class="flex items-center justify-between gap-2" aria-hidden="true">
@@ -73,7 +92,7 @@
           <img
             src={skill.icon}
             alt=""
-            class="size-16 shrink-0 object-contain sm:size-5"
+            class="md:size-8 size-5 shrink-0 object-contain"
             loading="lazy"
           />
         </div>
@@ -93,16 +112,34 @@
   </ul>
 
   <ul
-    class="mt-8 flex w-full list-none flex-wrap justify-start md:justify-center gap-x-6 gap-y-3 p-0 sm:mt-10 sm:gap-x-8"
+    class="mt-8 flex flex-col md:flex-row w-full list-none justify-start md:justify-center gap-4 p-0 sm:mt-10"
     aria-label="Skill group legend"
   >
     {#each groups as group (group)}
-      <li class="flex items-center gap-2 text-xs text-zinc-300 sm:text-sm">
-        <span
-          class="size-3 shrink-0 rounded-xs border {groupStyles.get(group)}"
-          aria-hidden="true"
-        ></span>
-        {group}
+      <li class="text-xs text-zinc-300 sm:text-sm">
+        <button
+          type="button"
+          class="flex min-h-11 items-center gap-2 rounded-sm border border-transparent px-3 py-2 hover:bg-white/5 aria-pressed:border-zinc-500 aria-pressed:bg-white/10 aria-pressed:text-white"
+          aria-pressed={selectedGroup === group}
+          onpointerenter={(event) => {
+            if (event.pointerType === "mouse") {
+              hoveredGroup = group;
+            }
+          }}
+          onpointerleave={() => {
+            hoveredGroup = null;
+          }}
+          onclick={() => {
+            selectedGroup = selectedGroup === group ? null : group;
+            hoveredGroup = null;
+          }}
+        >
+          <span
+            class="size-3 shrink-0 rounded-xs border {groupStyles.get(group)}"
+            aria-hidden="true"
+          ></span>
+          {group}
+        </button>
       </li>
     {/each}
   </ul>
