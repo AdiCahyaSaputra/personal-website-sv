@@ -10,7 +10,9 @@
 
 <section id="experience" aria-label="Experience" class="pb-24">
   <div class="flex flex-col gap-4 p-4 md:p-10" {@attach scrollYears}>
-    <h2 class="font-heading text-4xl leading-tight text-[#e5e2dc] md:text-8xl">
+    <h2
+      class="font-heading text-4xl leading-tight text-[#e5e2dc] md:text-8xl md:w-full w-1/2"
+    >
       {span} years of experience
     </h2>
     <div data-year-deck class="relative flex flex-col gap-4">

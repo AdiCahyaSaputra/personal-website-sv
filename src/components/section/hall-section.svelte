@@ -1,41 +1,14 @@
 <script lang="ts">
   import { AtIcon, GithubLogoIcon, LinkedinLogoIcon } from "phosphor-svelte";
   import { CONTACTS } from "$lib/constants/contact";
-  import { isHomeIntersect } from "$lib/state/is-home-intersect.svelte";
   import EncryptedText from "../reusable/encrypted-text.svelte";
-  import { startLoopSection } from "@/lib/utils/loop-section";
 
   let { isLastChild = false } = $props();
-
-  function onViewPort(node: HTMLElement) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          isHomeIntersect.value = entry.isIntersecting;
-
-          if (isHomeIntersect.value && isLastChild) {
-            startLoopSection();
-          }
-        });
-      },
-      {
-        threshold: 1,
-      },
-    );
-
-    observer.observe(node);
-
-    return () => {
-      observer.disconnect();
-      isHomeIntersect.value = false;
-    };
-  }
 </script>
 
 <section
-  id="home"
+  id={isLastChild ? "home-loop" : "home"}
   class="w-full h-screen bg-black p-4 md:p-10 flex justify-center items-center"
-  {@attach onViewPort}
 >
   <div
     class="bg-background w-full h-full rounded-lg flex flex-col justify-between items-center"

@@ -6,9 +6,14 @@
   import ProjectSection from "@/components/section/project-section.svelte";
   import SkillSection from "@/components/section/skill-section.svelte";
   import ExperienceSection from "@/components/section/experience-section.svelte";
+  import { startLoopSection } from "$lib/utils/loop-section";
 </script>
 
-<main id="main" class="relative overflow-x-hidden bg-foreground">
+<main
+  id="main"
+  class="relative overflow-x-hidden bg-foreground"
+  {@attach startLoopSection}
+>
   <Navbar />
   <BottomBlur />
 
