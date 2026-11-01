@@ -32,7 +32,7 @@ export const startLoopSection = (root: HTMLElement) => {
 
     if (endBounds.top > 1) return;
 
-    // Keep the visible Home instance, including its running text animation.
+    // Keep the visible Home instance, preserving its running text animation.
     root.insertBefore(end, home);
     root.insertBefore(home, endNextSibling);
 
@@ -43,6 +43,7 @@ export const startLoopSection = (root: HTMLElement) => {
     [home, end] = [end, home];
 
     function restorePosition() {
+      // Why do we need to swap two home when eventually did this ? to preserve the current text animation so the changes is'nt noticable
       window.scrollTo({
         top: window.scrollY + home.getBoundingClientRect().top - endBounds.top,
         behavior: "instant",
